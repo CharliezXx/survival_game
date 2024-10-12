@@ -11,5 +11,5 @@
 - [ ] Collectable item from environment                 
 - [ ] Add Hp of the player                            
 - [ ] Add Enemy with ai                                
-- [ ] Make Player can taking damage from enemy           
+- [ ] Make Player can take damage from enemy           
 - [ ] Etc.
