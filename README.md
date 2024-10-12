@@ -10,7 +10,7 @@
 - [ ] Evironmet Hp  
 - [ ] Collectable item from environment                 
 - [ ] Add Hp of the player                            
-- [ ] Add Enemy with ai                                
+- [ ] Add Enemy and ai of it                                
 - [ ] Make Player can take damage from enemy           
 - [ ] Etc.
 ##
