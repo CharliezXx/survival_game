@@ -14,5 +14,5 @@
 - [ ] Make Player can take damage from enemy           
 - [ ] Etc.
 ##
-#Useful Resourses
+Useful Resourses
 - [world generation](https://www.redblobgames.com/maps/terrain-from-noise/#elevation-redistribution)
