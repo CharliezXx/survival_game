@@ -7,9 +7,8 @@ extends Node2D
 @onready var world_Height:float = world_size
 @onready var world_Width:float = world_size
 
-@export var tile : Array[TileMapLayer]
-@export var noise : FastNoiseLite 
-
+@export_range(0,3) var Falloff_multipiler : float = 1.2
+@export var noise : FastNoiseLite = FastNoiseLite.new()
 
 var noise_arr =[]
 
@@ -17,7 +16,7 @@ var noise_arr =[]
 var arr_water =[]
 var arr_sand =[]
 var arr_grass =[]
-
+@export var tile : Array[TileMapLayer]
 @export_group("Layer")
 @export var water_layer:int
 @export var sand_layer:int
@@ -49,7 +48,7 @@ func  gen_world():
 			#var falloff =[((2*(x/world_Width))-1),((2*(y/world_Height))-1)]
 			
 			# Set ALT + falloff
-			var altitude = noise.get_noise_2d(x,y)-distance
+			var altitude = noise.get_noise_2d(x,y)-(distance*Falloff_multipiler)
 			
 			# add noise to arr for check max and min
 			noise_arr.append(noise.get_noise_2d(x,y))
@@ -64,7 +63,6 @@ func  gen_world():
 				pass
 			if altitude > 0.1:
 				arr_grass.append(Vector2i(x,y))
-	
 		#set_cells_terrain_connect(arr,terrain_set,terrain)
 	print(noise_arr.max(),noise_arr.min())
 # Called every frame. 'delta' is the elapsed time since the previous frame.

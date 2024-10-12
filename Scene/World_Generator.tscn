@@ -10,9 +10,9 @@ domain_warp_type = 2
 
 [node name="World_gen" type="Node2D" node_paths=PackedStringArray("tile")]
 script = ExtResource("1_uk0na")
-world_size = 100.0
-tile = [NodePath("water"), NodePath("sand"), NodePath("grass")]
+world_size = 30.0
 noise = SubResource("FastNoiseLite_jvlxp")
+tile = [NodePath("water"), NodePath("sand"), NodePath("grass")]
 sand_layer = 1
 grass_layer = 2
 
@@ -27,7 +27,3 @@ tile_set = ExtResource("1_ye8bw")
 [node name="grass" type="TileMapLayer" parent="."]
 texture_filter = 1
 tile_set = ExtResource("1_ye8bw")
-
-[node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource("1_ye8bw")
-format = 2
