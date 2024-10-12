@@ -1,8 +1,6 @@
 # Survival_game_miniproj
-
-
+> หาอะไรทำช่วงปิดเทอม
 **_Goals_**
-##
 - [x] Procedure world generation                          
 - [x] Add Falloff map to world generate system        
 - [x] Generate Environmet such as tree rock on tile
