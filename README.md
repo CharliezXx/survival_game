@@ -1,8 +1,7 @@
 # Survival_game_miniproj
 
-#8/10/2024
-##
-Goals 
+
+**_Goals_**
 ##
 - [x] Procedure world generation                          
 - [x] Add Falloff map to world generate system        
