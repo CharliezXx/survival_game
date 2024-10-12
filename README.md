@@ -16,3 +16,4 @@
 ##
 Useful Resourses
 - [world generation](https://www.redblobgames.com/maps/terrain-from-noise/#elevation-redistribution)
+- [Gem](https://www.youtube.com/watch?v=0296d6M_K-U)
