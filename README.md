@@ -1,4 +1,4 @@
-# Survival_game_miniproj
+# What is this
 > หาอะไรทำช่วงปิดเทอม
  ##
  **_Goals_**
@@ -13,3 +13,6 @@
 - [ ] Add Enemy with ai                                
 - [ ] Make Player can take damage from enemy           
 - [ ] Etc.
+##
+#Useful Resourses
+- [world generation](https://www.redblobgames.com/maps/terrain-from-noise/#elevation-redistribution)
