@@ -4,14 +4,14 @@
 ##
 Goals 
 ##
->*Procedure world generation                            + Completed
-*Add Falloff map to world generate system              + Completed
-*Generate Environmet such as tree rock on tile         + Working on it 
-*Add Player charcter                                   + Pending
-*Destroy Environment                                   + Pending
-*Evironmet Hp                                          + Pending
-*Collectable item from environment                     + Pending
-*Add Hp of the player                                  + Pending
-*Add Enemy with ai                                     + Pending
-*Make Player can taking damage from enemy              + Pending
-*Etc.
+- [x] Procedure world generation                          
+- [x] Add Falloff map to world generate system        
+- [x] Generate Environmet such as tree rock on tile
+- [] Add Player charcter 
+- [] Destroy Environment 
+- [] Evironmet Hp  
+- [] Collectable item from environment                 
+- [] Add Hp of the player                            
+- [] Add Enemy with ai                                
+- [] Make Player can taking damage from enemy           
+- [] Etc.
