@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://c4birg33uf2hs"]
+
+[ext_resource type="Script" path="res://Script/World_gen.gd" id="1_uk0na"]
+[ext_resource type="TileSet" uid="uid://c0g6xn6m82q7r" path="res://Asset/Terrarin_tile/Terrarin_tile_set.tres" id="1_ye8bw"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_xmuwg"]
+
+[node name="World_gen" type="Node2D" node_paths=PackedStringArray("tile")]
+script = ExtResource("1_uk0na")
+Gen_World = true
+world_Height = 100
+world_Width = 100
+tile = [NodePath("water"), NodePath("sand"), NodePath("grass")]
+noise = SubResource("FastNoiseLite_xmuwg")
+sand_layer = 1
+grass_layer = 2
+
+[node name="water" type="TileMapLayer" parent="."]
+texture_filter = 1
+tile_set = ExtResource("1_ye8bw")
+
+[node name="sand" type="TileMapLayer" parent="."]
+texture_filter = 1
+tile_set = ExtResource("1_ye8bw")
+
+[node name="grass" type="TileMapLayer" parent="."]
+texture_filter = 1
+tile_set = ExtResource("1_ye8bw")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("1_ye8bw")
+format = 2

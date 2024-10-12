@@ -1,0 +1,3 @@
+res://Scene/World_Generator.tscn
+res://Asset/Terrarin_tile/Terrarin_tile_set.tres
+res://Script/World_gen.gd

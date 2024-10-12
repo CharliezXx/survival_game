@@ -1,0 +1,11 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1728745884
+icon.svg::CompressedTexture2D::8724297772061342036::1728727341::1728727350::1::::<><>::
+::res://Asset/::1728731865
+::res://Asset/Terrarin_tile/::1728739792
+base_terrain.png::CompressedTexture2D::3568254260715190669::1728732514::1728732514::1::::<><>::
+Terrarin_tile_set.tres::TileSet::6541872756179837113::1728739792::0::1::::<><>::uid://bq3qvkb5bxtsv::::res://Asset/Terrarin_tile/base_terrain.png
+::res://Scene/::1728745652
+World_Generator.tscn::PackedScene::6810898664775487060::1728745652::0::1::::<><>::res://Script/World_gen.gd<>uid://c0g6xn6m82q7r::::res://Asset/Terrarin_tile/Terrarin_tile_set.tres
+::res://Script/::1728745486
+World_gen.gd::GDScript::-1::1728745486::0::1::::<>Node2D<>::
