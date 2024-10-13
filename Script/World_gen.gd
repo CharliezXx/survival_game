@@ -5,25 +5,37 @@ extends Node2D
 		clear()
 		gen_world()
 		gen_tile()
-		
 
 
-@export_range(1,1000) var world_size:float =50
 
-@export_range(0,3) var Falloff_multipiler : float = 1.2
+@export_range(10,1000,10) var world_size:float =50
+@export var use_falloff  : bool=true
+@export_range(0,3) var Falloff_multiplier : float = 1.7
 @export var noise : FastNoiseLite = FastNoiseLite.new()
 
 var noise_arr =[]
 
-##LAYERS
+
 var arr_water =[]
 var arr_sand =[]
 var arr_grass =[]
 @export var tile : Array[TileMapLayer]
-@export_group("Layer")
+##LAYERS and Altitude
+@export_group("Layer and Altitude setting")
+@export_subgroup("water")
 @export var water_layer:int
+@export_range(-1,1) var water_alt_max:float = 1
+@export_range(-1,1) var water_alt_min:float = -1
+
+@export_subgroup("sand")
 @export var sand_layer:int
+@export_range(-1,1) var sand_alt_max:float = 1
+@export_range(-1,1) var sand_alt_min:float = -0.3
+
+@export_subgroup("grass")
 @export var grass_layer:int
+@export_range(-1,1) var grass_alt_max:float =  1
+@export_range(-1,1) var grass_alt_min:float =  0.3
 
 
 func _ready() -> void:	
@@ -71,8 +83,11 @@ func  gen_world():
 			#var falloff =[((2*(x/world_Width))-1),((2*(y/world_Height))-1)]
 			
 			# Set ALT + falloff
-			var altitude = noise.get_noise_2d(x,y)-(distance*Falloff_multipiler)
-			
+			var altitude
+			if use_falloff:
+				altitude = noise.get_noise_2d(x,y)-(distance*Falloff_multiplier)
+			else:
+				altitude = noise.get_noise_2d(x,y)
 			# add noise to arr for check max and min
 			noise_arr.append(noise.get_noise_2d(x,y))
 			
@@ -81,12 +96,12 @@ func  gen_world():
 			
 			# Check which terrain to place according to althitude
 			# alt in Simplex noise ->(~0.65 to -0.65)
-			if altitude > -0.3:
+			if sand_alt_max > altitude and altitude > sand_alt_min:
 				arr_sand.append(Vector2i(x,y))
-				pass
-			if altitude > 0.1:
+			if grass_alt_max > altitude and altitude > grass_alt_min:
 				arr_grass.append(Vector2i(x,y))
-			arr_water.append(Vector2i(x,y))
+			if water_alt_max > altitude and altitude > water_alt_min:
+				arr_water.append(Vector2i(x,y))
 		
 	#print(noise_arr.max(),noise_arr.min())
 # Called every frame. 'delta' is the elapsed time since the previous frame.
