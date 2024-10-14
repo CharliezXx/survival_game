@@ -4,7 +4,7 @@
  **_Goals_**
 - [x] Procedure world generation                          
 - [x] Add Falloff map to world generate system        
-- [ ] Generate Environmet such as tree , rock on correct tile
+- [x] Generate Environmet such as tree , rock on correct tile
 - [ ] Add Player charcter 
 - [ ] Destroy Environment 
 - [ ] Evironmet Hp  
