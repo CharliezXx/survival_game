@@ -1,8 +1,8 @@
+MapCamera2D
 Camera2D
 Sprite2D
 CollisionShape2D
 CharacterBody2D
 TilesetHandler
-MapCamera2D
 TileMap
 TileMapLayer

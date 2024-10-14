@@ -3,3 +3,5 @@ res://Scene/World_Generator.tscn
 res://Asset/Terrarin_tile/Terrarin_tile_set.tres
 res://Scene/Object/tree_1.tscn
 res://Scene/Object/short_tree1.tscn
+res://Script/World_gen.gd
+res://Script/char_movement.gd

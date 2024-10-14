@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://Script/camera_2d.gd" id="5_6sdio"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_u1fyx"]
-radius = 9.22884
+radius = 6.87892
 
 [sub_resource type="Animation" id="Animation_en43c"]
 length = 0.001
@@ -140,6 +140,7 @@ y_sort_enabled = true
 scale = Vector2(0.997332, 0.995194)
 collision_layer = 2
 script = ExtResource("1_pt082")
+SPEED = 150.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true

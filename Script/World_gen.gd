@@ -41,19 +41,21 @@ var arr_grass =[]
 ############################################
 @export_group("Random Object Generation")
 @export var obj:Array[Dictionary]
-'''var tree_obj ={
-	"normal_tree": preload("res://Scene/Object/tree_1.tscn"),
- 	"short_tree": preload("res://Scene/Object/short_tree1.tscn")
-}'''
+
 var rock_obj ={
 	
 }
+#Player
+
+var isplayer_spawn:bool=false
+var player = preload("res://Scene/player.tscn").instantiate()
+var count:int=0
 
 func _ready() -> void:	
 	clear()
-	gen_world()
-	gen_tile()
-
+	while !isplayer_spawn:
+		gen_world()
+		gen_tile()
 	pass
 
 #Clear tile from PREVIOUS generation
@@ -81,16 +83,18 @@ func gen_tile():
 	tile[sand_layer].set_cells_terrain_connect(arr_sand,1,0)
 	tile[water_layer].set_cells_terrain_connect(arr_water,0,0)
 
+
+
 func  gen_world():
 	if noise_for_alt != null:
 		noise_for_alt.seed = randi()
-		noise_for_temperature.seed =randi(
+		noise_for_temperature.seed =randi()
 		
-		)
+		
 	#Loop Through Size of the map
 		for x in world_size:
 			for y in world_size:
-
+				var player_spawn_pos = tile[grass_layer].map_to_local(Vector2i(x,y))	
 				#making falloff
 				var half_h:float = ((2*(x/world_size))-1)
 				var half_w:float = ((2*(y/world_size))-1)
@@ -106,30 +110,21 @@ func  gen_world():
 					altitude = noise_for_alt.get_noise_2d(x,y)-(distance*Falloff_multiplier)
 				else:
 					altitude = noise_for_alt.get_noise_2d(x,y)
-
-				if use_temperature:
-					temperature = noise_for_alt.get_noise_2d(x,y)
-				else:
-					pass
+				
+				temperature = noise_for_alt.get_noise_2d(x,y)
+			
+					
 				# add noise to arr for check max and min
 				noise_arr.append(noise_for_alt.get_noise_2d(x,y))
-
-				# Set Sea background
-				tile[water_layer].set_cell(Vector2i(x,y),1,Vector2i(9,10))
-
-
+				
 				# Check which terrain to place according to althitude
 				# alt in Simplex noise ->(~0.65 to -0.65)
 				if sand_alt_max > altitude and altitude > sand_alt_min:
 					arr_sand.append(Vector2i(x,y))
-					
-						
-							
-				if grass_alt_max > altitude and altitude > grass_alt_min:
-					
-					
-					
+
+				if grass_alt_max > altitude and altitude > grass_alt_min:			
 					arr_grass.append(Vector2i(x,y))
+					
 					if  temperature > 0.3:
 						var change = randf_range(0,1)
 						if not Engine.is_editor_hint():
@@ -137,13 +132,22 @@ func  gen_world():
 								gen_obj(grass_layer,obj[0],"normal_tree",x,y)
 							elif change <= 0.05:
 								gen_obj(grass_layer,obj[0],"short_tree",x,y)
-								
-								
-								
-								
-				if water_alt_max > altitude and altitude > water_alt_min:
+												
+				if 4 > altitude and altitude > -4 :
+					# Set Sea background
+					tile[water_layer].set_cell(Vector2i(x,y),1,Vector2i(9,10))
 					arr_water.append(Vector2i(x,y))
-
+					
+					
+				if not Engine.is_editor_hint():
+					##SPAWN PLAYER	
+					if altitude > grass_alt_min and x>world_size/2 and y> world_size/2:
+						
+						if !isplayer_spawn:
+							add_child(player)
+							player.position = player_spawn_pos
+							isplayer_spawn = true
+					###############	
 
 	else:
 		print("Noise for Alt can't be null!")
