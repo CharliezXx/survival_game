@@ -133,9 +133,9 @@ func  gen_world():
 					if  temperature > 0.3:
 						var change = randf_range(0,1)
 						if not Engine.is_editor_hint():
-							if change > 0.8:
+							if change < 0.1 and change >0.06:
 								gen_obj(grass_layer,obj[0],"normal_tree",x,y)
-							elif change > 0.5:
+							elif change <= 0.05:
 								gen_obj(grass_layer,obj[0],"short_tree",x,y)
 								
 								

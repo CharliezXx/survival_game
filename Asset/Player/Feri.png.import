@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clcj560lui5s2"
-path="res://.godot/imported/tree1.png-c4bb40149df9a314cfaaa6292a22453f.ctex"
+uid="uid://b54ksrdexn3v7"
+path="res://.godot/imported/Feri.png-9ef000d0facd8b49306b418390fc72da.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Asset/tree1.png"
-dest_files=["res://.godot/imported/tree1.png-c4bb40149df9a314cfaaa6292a22453f.ctex"]
+source_file="res://Asset/Player/Feri.png"
+dest_files=["res://.godot/imported/Feri.png-9ef000d0facd8b49306b418390fc72da.ctex"]
 
 [params]
 

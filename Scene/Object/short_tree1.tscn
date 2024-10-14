@@ -3,9 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://b8omphgk0101n" path="res://Asset/Object/short_tree1.png" id="1_srey7"]
 
 [node name="Node2D" type="Node2D"]
+y_sort_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
 texture_filter = 1
-position = Vector2(0, -29)
 texture = ExtResource("1_srey7")
+offset = Vector2(0, -28.825)
