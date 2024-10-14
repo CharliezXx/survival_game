@@ -1,12 +1,13 @@
 @tool
 extends Node2D
-
+class_name World_gen
 ##Generate Button
 @export var generate:bool:
 	set(value):
 		clear()
 		gen_world()
 		gen_tile()
+		
 
 ##Generation Setting Inspector
 @export_group("Generation Setting")
@@ -42,9 +43,7 @@ var arr_grass =[]
 @export_group("Random Object Generation")
 @export var obj:Array[Dictionary]
 
-var rock_obj ={
-	
-}
+var stored_obj:Array[String]=[]
 #Player
 
 var isplayer_spawn:bool=false
@@ -57,6 +56,8 @@ func _ready() -> void:
 		gen_world()
 		gen_tile()
 	pass
+	set_meta("obj",stored_obj)
+	#print(stored_obj)
 
 #Clear tile from PREVIOUS generation
 func clear():	
@@ -98,7 +99,7 @@ func  gen_world():
 				#making falloff
 				var half_h:float = ((2*(x/world_size))-1)
 				var half_w:float = ((2*(y/world_size))-1)
-				#print(half_h,",",half_w)
+				
 				var distance = 1 - (1-pow(half_w,2)) * (1-pow(half_h,2))
 				#var falloff =[((2*(x/world_Width))-1),((2*(y/world_Height))-1)]
 
@@ -155,10 +156,12 @@ func  gen_world():
 
 # This Function use for generate node scene 
 func gen_obj(layer:int,obj:Dictionary,key:String,x_from_loop:int,y_from_loop:int):
-	var object_to_place :Node2D = obj[key].instantiate()
+	var object_to_place = obj[key].instantiate()
 	var tile_pos = tile[layer].map_to_local(Vector2i(x_from_loop,y_from_loop))
 	object_to_place.position = tile_pos
 	add_child(object_to_place)
+	object_to_place.name = "obj_1"
+	stored_obj.append(object_to_place.name)
 	pass
 
 

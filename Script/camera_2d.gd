@@ -8,7 +8,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	print()
+
 	if zoom >= Vector2(1.8,1.8):
 		if Input.is_action_just_released("scroll_down"):
 			zoom -= Vector2(pow(.5,2),pow(.5,2))

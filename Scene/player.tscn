@@ -170,3 +170,7 @@ script = ExtResource("5_6sdio")
 libraries = {
 "": SubResource("AnimationLibrary_drmhv")
 }
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(-4.0107, -91.4395)
+scale = Vector2(1, 1)
