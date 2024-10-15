@@ -1,9 +1,9 @@
+CollisionShape2D
+Area2D
 Control
 Container
 Destructible_obj
 Node
-Area2D
 StaticBody2D
-CollisionShape2D
 Sprite2D
 TileMapLayer
