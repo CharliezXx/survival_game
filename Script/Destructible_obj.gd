@@ -11,7 +11,10 @@ func damage(dmg:int):
 	if health <= 0:
 		queue_free()
 	pass
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("left_click"):
-		
-		pass
+	
+func _ready() -> void:
+	connect("mouse_entered", do_damage)
+
+func do_damage():
+	print(get_node('.'))
+	queue_free()

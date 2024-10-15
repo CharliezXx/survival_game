@@ -52,6 +52,7 @@ var player = preload("res://Scene/player.tscn").instantiate()
 var count:int=0
 
 func _ready() -> void:	
+	
 	if tile != []:
 		clear()
 		while !isplayer_spawn:
@@ -157,10 +158,11 @@ func  gen_world():
 
 # This Function use for generate node scene 
 func gen_obj(layer:int,obj:Dictionary,key:String,x_from_loop:int,y_from_loop:int):
-	var object_to_place :Node2D = obj[key].instantiate()
+	var object_to_place = obj[key].instantiate() as Node2D
 	var tile_pos = tile[layer].map_to_local(Vector2i(x_from_loop,y_from_loop))
 	object_to_place.position = tile_pos
 	add_child(object_to_place)
+	object_to_place.name = "obj_1"
 	pass
 
 
