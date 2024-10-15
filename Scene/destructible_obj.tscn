@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://c40nd7to6q2aa"]
+
+[ext_resource type="Script" path="res://Script/Destructible_obj.gd" id="1_0oomr"]
+[ext_resource type="Texture2D" uid="uid://y6n0ffh71b3l" path="res://Asset/Object/tree1.png" id="2_in45j"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cfanp"]
+radius = 17.2627
+
+[node name="Destructible_obj" type="Node2D" node_paths=PackedStringArray("obj_to_destroy", "clickable_area")]
+y_sort_enabled = true
+script = ExtResource("1_0oomr")
+obj_to_destroy = NodePath("Sprite2D")
+clickable_area = NodePath("Sprite2D/Area2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -30)
+texture = ExtResource("2_in45j")
+
+[node name="Area2D" type="Area2D" parent="Sprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
+shape = SubResource("CircleShape2D_cfanp")

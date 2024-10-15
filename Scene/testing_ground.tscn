@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://wuw3316ogpec"]
+
+[ext_resource type="PackedScene" uid="uid://c40nd7to6q2aa" path="res://Scene/destructible_obj.tscn" id="1_xw0qi"]
+[ext_resource type="PackedScene" uid="uid://67sikmdv1fmm" path="res://Scene/player.tscn" id="2_h5tj7"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Destructible_obj" parent="." instance=ExtResource("1_xw0qi")]
+position = Vector2(466, 196)
+
+[node name="Destructible_obj2" parent="." instance=ExtResource("1_xw0qi")]
+position = Vector2(620, 278)
+
+[node name="Destructible_obj3" parent="." instance=ExtResource("1_xw0qi")]
+position = Vector2(650, 60)
+
+[node name="Player" parent="." instance=ExtResource("2_h5tj7")]
+position = Vector2(278, 74)

@@ -1,6 +1,6 @@
 @tool
 extends Node2D
-
+class_name Word_gen
 ##Generate Button
 @export var generate:bool:
 	set(value):
@@ -26,18 +26,18 @@ var arr_grass =[]
 @export_group("Layer and Altitude")
 @export_subgroup("water")
 @export var water_layer:int
-@export_range(-1,1) var water_alt_max:float = 1
+@export_range(-1,1) var water_alt_max:float = 0
 @export_range(-1,1) var water_alt_min:float = -1
 
 @export_subgroup("sand")
 @export var sand_layer:int
 @export_range(-1,1) var sand_alt_max:float = 1
-@export_range(-1,1) var sand_alt_min:float = -0.3
+@export_range(-1,1) var sand_alt_min:float = -0.4
 
 @export_subgroup("grass")
 @export var grass_layer:int
-@export_range(-1,1) var grass_alt_max:float =  1
-@export_range(-1,1) var grass_alt_min:float =  0.3
+@export_range(-1,1) var grass_alt_max:float =  2
+@export_range(-1,1) var grass_alt_min:float =  -0.3
 ############################################
 @export_group("Random Object Generation")
 @export var obj:Array[Dictionary]
@@ -52,12 +52,14 @@ var player = preload("res://Scene/player.tscn").instantiate()
 var count:int=0
 
 func _ready() -> void:	
-	clear()
-	while !isplayer_spawn:
-		gen_world()
-		gen_tile()
-	pass
-
+	if tile != []:
+		clear()
+		while !isplayer_spawn:
+			gen_world()
+			gen_tile()
+		pass
+	else:
+		print("no tile to place")
 #Clear tile from PREVIOUS generation
 func clear():	
 	noise_arr.clear()
@@ -89,7 +91,7 @@ func  gen_world():
 	if noise_for_alt != null:
 		noise_for_alt.seed = randi()
 		noise_for_temperature.seed =randi()
-		
+		noise_for_temperature.frequency = 0.02
 		
 	#Loop Through Size of the map
 		for x in world_size:
