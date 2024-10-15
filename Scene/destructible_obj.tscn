@@ -6,18 +6,18 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_cfanp"]
 radius = 17.2627
 
-[node name="Destructible_obj" type="Node2D" node_paths=PackedStringArray("obj_to_destroy", "clickable_area")]
+[node name="Destructible_obj" type="Node2D"]
 y_sort_enabled = true
-script = ExtResource("1_0oomr")
-obj_to_destroy = NodePath("Sprite2D")
-clickable_area = NodePath("Sprite2D/Area2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(0, -30)
 texture = ExtResource("2_in45j")
 
-[node name="Area2D" type="Area2D" parent="Sprite2D"]
+[node name="Area2D" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("obj_to_destroy", "clickable_area")]
+script = ExtResource("1_0oomr")
+obj_to_destroy = NodePath("../..")
+clickable_area = NodePath(".")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
 shape = SubResource("CircleShape2D_cfanp")

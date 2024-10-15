@@ -3,11 +3,15 @@
 [ext_resource type="Texture2D" uid="uid://y6n0ffh71b3l" path="res://Asset/Object/tree1.png" id="1_ihtjh"]
 [ext_resource type="Script" path="res://Script/Destructible_obj.gd" id="2_5cn87"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_nqesh"]
-radius = 29.2746
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ec3gn"]
+size = Vector2(20, 38)
 
-[node name="Tree_1" type="Node2D"]
+[node name="Tree_1" type="Node2D" node_paths=PackedStringArray("obj_to_destroy", "clickable_area")]
 y_sort_enabled = true
+script = ExtResource("2_5cn87")
+obj_to_destroy = NodePath(".")
+clickable_area = NodePath("Sprite2D/Area2D")
+health = 15
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
@@ -15,11 +19,8 @@ texture_filter = 1
 texture = ExtResource("1_ihtjh")
 offset = Vector2(0, -30.225)
 
-[node name="Area2D" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("obj_to_destroy", "clickable_area")]
-script = ExtResource("2_5cn87")
-obj_to_destroy = NodePath("../..")
-clickable_area = NodePath(".")
+[node name="Area2D" type="Area2D" parent="Sprite2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
-position = Vector2(-1, -29)
-shape = SubResource("CircleShape2D_nqesh")
+position = Vector2(-1, -20)
+shape = SubResource("RectangleShape2D_ec3gn")
