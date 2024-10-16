@@ -11,7 +11,8 @@
 - [ ] Collectable item from environment                 
 - [ ] Add Hp of the player                            
 - [ ] Add Enemy and ai of it                                
-- [ ] Make Player can take damage from enemy           
+- [ ] Make Player can take damage from enemy
+- [ ] Crafting system      
 - [ ] Etc.
 ##
 **_Useful Resourses_**
