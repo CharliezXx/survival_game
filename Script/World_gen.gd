@@ -40,6 +40,8 @@ var arr_grass =[]
 @export_range(-1,1) var grass_alt_min:float =  -0.3
 ############################################
 @export_group("Random Object Generation")
+@export var random_size:bool=true
+@export var random_facing:bool=true
 @export var obj:Array[Dictionary]
 
 var rock_obj ={
@@ -174,6 +176,17 @@ func gen_obj(layer:int,obj:Dictionary,key:String,x_from_loop:int,y_from_loop:int
 	var object_to_place = obj[key].instantiate() as Node2D
 	var tile_pos = tile[layer].map_to_local(Vector2i(x_from_loop,y_from_loop))
 	object_to_place.position = tile_pos
+	
+	## For random size and facing
+	var rand_x = randi_range(0,1)
+	var rand_y = randf_range(1.0,1.2)
+	if random_facing == true:
+		if rand_x ==1:
+			object_to_place.scale.x = -1
+		else :
+			object_to_place.scale.x = 1
+	if random_size == true:
+		object_to_place.scale.y = rand_y	
 	add_child(object_to_place)
 	object_to_place.name = "obj_1"
 	pass

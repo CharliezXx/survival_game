@@ -1,7 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://j70qoin6t0nf"]
+[gd_scene load_steps=6 format=3 uid="uid://j70qoin6t0nf"]
 
 [ext_resource type="Texture2D" uid="uid://y6n0ffh71b3l" path="res://Asset/Object/tree1.png" id="1_ihtjh"]
 [ext_resource type="Script" path="res://Script/Destructible_obj.gd" id="2_5cn87"]
+[ext_resource type="Shader" path="res://Shaders/tree_shaders.gdshader" id="2_fds32"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jctja"]
+shader = ExtResource("2_fds32")
+shader_parameter/speed = 1.0
+shader_parameter/strength = 0.05
+shader_parameter/y_origin = 10.0
+shader_parameter/restrict_dir = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ec3gn"]
 size = Vector2(20, 27)
@@ -16,6 +24,7 @@ health = 15
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
 texture_filter = 1
+material = SubResource("ShaderMaterial_jctja")
 texture = ExtResource("1_ihtjh")
 offset = Vector2(0, -30.225)
 
