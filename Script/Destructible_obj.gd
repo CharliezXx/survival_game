@@ -29,17 +29,17 @@ func do_dmg() -> void:
 	if health > 0:  # Check if health is greater than zero
 		health -= 1  # Reduce health by 1
 		print(health)
-	if health <= 0:  # Check if health is zero or less
-		destroy()  # Call destroy to remove the object
-var tree:SceneTree
+	if health <= 0:  
+		destroy()  
+
 func destroy():
 	if obj_node:
 		if !have_drop:
 			print("Assign item drop first!")
 		else:
 			 # Instance the item drop scene and set its position
-			var dropped_item = item_drop_scene.instantiate()  # Instantiate the PackedScene
+			var dropped_item = item_drop_scene.instantiate()  # make node2d from packed scene
 			dropped_item.position = global_position
 			get_parent().add_child(dropped_item)  # Add the dropped item to the scene
-	queue_free()# Remove the specified child object
+	queue_free()
 		
