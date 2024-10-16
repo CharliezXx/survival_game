@@ -91,7 +91,11 @@ func gen_tile():
 
 
 func  gen_world():
-	if noise_for_alt != null:
+	if noise_for_alt == null:
+		print("must assign altitude noise")
+	elif noise_for_temperature == null:
+		print("must assign temperature noise")
+	else:
 		noise_for_alt.seed = randi()
 		noise_for_temperature.seed =randi()
 		noise_for_temperature.frequency = 0.02
@@ -166,9 +170,6 @@ func  gen_world():
 							player.position = player_spawn_pos
 							isplayer_spawn = true
 					###############	
-
-	else:
-		print("Noise for Alt can't be null!")
 
 
 # This Function use for generate node scene 

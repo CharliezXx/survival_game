@@ -1,21 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://drickahwgq0db"]
+[gd_scene load_steps=5 format=3 uid="uid://drickahwgq0db"]
 
 [ext_resource type="Script" path="res://Script/Destructible_obj.gd" id="1_jolbj"]
+[ext_resource type="Material" uid="uid://c5vp45p3rvvyk" path="res://Shaders/tree_shader_mat.tres" id="2_b66x2"]
 [ext_resource type="Texture2D" uid="uid://ct7s0jvi24dmj" path="res://Asset/Object/tree2.png" id="2_hha1q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ec3gn"]
 size = Vector2(20, 25)
 
-[node name="Tree_1" type="Node2D" node_paths=PackedStringArray("obj_to_destroy", "clickable_area")]
+[node name="Tree_1" type="Node2D" node_paths=PackedStringArray("obj_node", "clickable_area")]
 y_sort_enabled = true
+texture_filter = 1
 script = ExtResource("1_jolbj")
-obj_to_destroy = NodePath(".")
+obj_node = NodePath(".")
 clickable_area = NodePath("Sprite2D/Area2D")
 health = 15
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
 texture_filter = 1
+material = ExtResource("2_b66x2")
 texture = ExtResource("2_hha1q")
 offset = Vector2(0, -30.225)
 

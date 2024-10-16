@@ -1,21 +1,27 @@
 extends Node2D
 
 class_name Destructible_obj
-
-@export var obj_to_destroy: Node2D
+var main_scene : PackedScene = preload("res://Scene/world_generation.tscn")
+@export var obj_node: Node2D
 @export var clickable_area: Area2D
-
+@export var anim :AnimationPlayer
 @export var health: int = 10
+@export var have_drop:bool
+@export var item_drop_scene:PackedScene
 var max_health
 func _ready() -> void:
 	max_health = health
 	# Connect the input event for the clickable area
 	clickable_area.connect("input_event",_on_clickable_area_input_event)
 	clickable_area.connect("mouse_exited",restore_health)
+	
+	
 func _on_clickable_area_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
-		if event.pressed and Input.is_action_pressed("left_click"):  # Check for left mouse button
+		if event.pressed and Input.is_action_pressed("left_click"):
 			do_dmg()
+			if anim:
+				anim.play("obj_hit")
 func restore_health():
 	health = max_health
 		
@@ -25,7 +31,15 @@ func do_dmg() -> void:
 		print(health)
 	if health <= 0:  # Check if health is zero or less
 		destroy()  # Call destroy to remove the object
-
+var tree:SceneTree
 func destroy():
-	if obj_to_destroy:
-		queue_free()# Remove the specified child object
+	if obj_node:
+		if !have_drop:
+			print("Assign item drop first!")
+		else:
+			 # Instance the item drop scene and set its position
+			var dropped_item = item_drop_scene.instantiate()  # Instantiate the PackedScene
+			dropped_item.position = global_position
+			get_parent().add_child(dropped_item)  # Add the dropped item to the scene
+	queue_free()# Remove the specified child object
+		

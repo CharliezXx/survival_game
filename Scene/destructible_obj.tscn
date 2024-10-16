@@ -14,9 +14,8 @@ texture_filter = 1
 position = Vector2(0, -30)
 texture = ExtResource("2_in45j")
 
-[node name="Area2D" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("obj_to_destroy", "clickable_area")]
+[node name="Area2D" type="Area2D" parent="Sprite2D" node_paths=PackedStringArray("clickable_area")]
 script = ExtResource("1_0oomr")
-obj_to_destroy = NodePath("../..")
 clickable_area = NodePath(".")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]

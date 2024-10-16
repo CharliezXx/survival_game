@@ -1,15 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://j70qoin6t0nf"]
+[gd_scene load_steps=8 format=3 uid="uid://j70qoin6t0nf"]
 
 [ext_resource type="Texture2D" uid="uid://y6n0ffh71b3l" path="res://Asset/Object/tree1.png" id="1_ihtjh"]
 [ext_resource type="Script" path="res://Script/Destructible_obj.gd" id="2_5cn87"]
 [ext_resource type="Material" uid="uid://c5vp45p3rvvyk" path="res://Shaders/tree_shader_mat.tres" id="2_wth4p"]
 [ext_resource type="PackedScene" uid="uid://d30svibw15yim" path="res://anim/obj_hit_anim.tscn" id="4_0oq7h"]
-[ext_resource type="PackedScene" uid="uid://d1rbvjax3hjfm" path="res://Scene/Item/item_log1.tscn" id="5_hafn2"]
+[ext_resource type="Script" path="res://Script/dropable_item.gd" id="5_waj7p"]
+[ext_resource type="Texture2D" uid="uid://d4kkao8mpolrp" path="res://Asset/Item/log.png" id="6_tftrg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ec3gn"]
 size = Vector2(20, 27)
 
-[node name="Tree_1" type="Node2D" node_paths=PackedStringArray("obj_node", "clickable_area", "anim")]
+[node name="Tree_1" type="Node2D" node_paths=PackedStringArray("obj_node", "clickable_area", "anim", "item_drop")]
 y_sort_enabled = true
 script = ExtResource("2_5cn87")
 obj_node = NodePath(".")
@@ -17,7 +18,7 @@ clickable_area = NodePath("Sprite2D/Area2D")
 anim = NodePath("Sprite2D/AnimationPlayer")
 health = 15
 have_drop = true
-item_drop_scene = ExtResource("5_hafn2")
+item_drop = NodePath("Dropable_item")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
@@ -34,5 +35,9 @@ shape = SubResource("RectangleShape2D_ec3gn")
 
 [node name="AnimationPlayer" parent="Sprite2D" instance=ExtResource("4_0oq7h")]
 
-[node name="Node2D" parent="." instance=ExtResource("5_hafn2")]
-visible = false
+[node name="Dropable_item" type="Node2D" parent="."]
+script = ExtResource("5_waj7p")
+
+[node name="Sprite2D" type="Sprite2D" parent="Dropable_item"]
+texture_filter = 1
+texture = ExtResource("6_tftrg")

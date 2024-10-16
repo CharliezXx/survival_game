@@ -1,6 +1,8 @@
-res://Shaders
-res://Asset/Object
+res://Scene/Item
 res://Script
+res://Shaders
+res://anim
+res://Asset/Object
 res://Scene
 res://Asset/Terrarin_tile
 res://Scene/Object

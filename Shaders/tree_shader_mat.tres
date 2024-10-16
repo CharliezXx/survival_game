@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://c5vp45p3rvvyk"]
+
+[ext_resource type="Shader" uid="uid://c4m8rme4njdbd" path="res://Shaders/tree_shader_mat_update.tres" id="1_kfs2d"]
+
+[resource]
+shader = ExtResource("1_kfs2d")
