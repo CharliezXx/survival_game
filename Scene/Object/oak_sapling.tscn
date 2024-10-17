@@ -1,22 +1,22 @@
 [gd_scene load_steps=5 format=3 uid="uid://bj8dgaquj8buu"]
 
-[ext_resource type="Script" path="res://Script/Destructible_obj.gd" id="1_6u2n0"]
-[ext_resource type="Texture2D" uid="uid://b8omphgk0101n" path="res://Asset/Object/short_tree1.png" id="1_srey7"]
-[ext_resource type="Material" uid="uid://c5vp45p3rvvyk" path="res://Shaders/tree_shader_mat.tres" id="2_rkskt"]
+[ext_resource type="Script" path="res://Script/Destructible_obj.gd" id="1_s3gl5"]
+[ext_resource type="Material" uid="uid://c5vp45p3rvvyk" path="res://Shaders/tree_shader_mat.tres" id="2_bdijx"]
+[ext_resource type="Texture2D" uid="uid://b8omphgk0101n" path="res://Asset/Object/short_tree1.png" id="3_q72qh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4a7nk"]
 size = Vector2(16, 26)
 
 [node name="short_tree1" type="Node2D" node_paths=PackedStringArray("clickable_area")]
 y_sort_enabled = true
-script = ExtResource("1_6u2n0")
+script = ExtResource("1_s3gl5")
 clickable_area = NodePath("Sprite2D/Area2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
 texture_filter = 1
-material = ExtResource("2_rkskt")
-texture = ExtResource("1_srey7")
+material = ExtResource("2_bdijx")
+texture = ExtResource("3_q72qh")
 offset = Vector2(0, -28.825)
 
 [node name="Area2D" type="Area2D" parent="Sprite2D"]

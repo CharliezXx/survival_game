@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://j70qoin6t0nf"]
+
+[ext_resource type="Script" path="res://Script/Destructible_obj.gd" id="1_jvpfa"]
+[ext_resource type="PackedScene" uid="uid://d1rbvjax3hjfm" path="res://Scene/Item/item_log_oak.tscn" id="2_di1o5"]
+[ext_resource type="Material" uid="uid://c5vp45p3rvvyk" path="res://Shaders/tree_shader_mat.tres" id="3_tbnwe"]
+[ext_resource type="Texture2D" uid="uid://y6n0ffh71b3l" path="res://Asset/Object/tree1.png" id="4_uqstg"]
+[ext_resource type="PackedScene" uid="uid://d30svibw15yim" path="res://anim/obj_hit_anim.tscn" id="5_8vs3e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ec3gn"]
+size = Vector2(20, 27)
+
+[node name="oak_tree" type="Node2D" node_paths=PackedStringArray("obj_node", "clickable_area", "anim")]
+y_sort_enabled = true
+script = ExtResource("1_jvpfa")
+obj_node = NodePath(".")
+clickable_area = NodePath("Area2D")
+anim = NodePath("Sprite2D/AnimationPlayer")
+health = 15
+have_drop = true
+item_drop_scene = ExtResource("2_di1o5")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-1, -14.5)
+shape = SubResource("RectangleShape2D_ec3gn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
+texture_filter = 1
+material = ExtResource("3_tbnwe")
+texture = ExtResource("4_uqstg")
+offset = Vector2(0, -30.225)
+
+[node name="AnimationPlayer" parent="Sprite2D" instance=ExtResource("5_8vs3e")]
+
+[node name="Node2D" parent="." instance=ExtResource("2_di1o5")]
+visible = false

@@ -1,3 +1,4 @@
+TileMapLayer
 Sprite2D
 Dropable_item
 AnimationPlayer
@@ -10,4 +11,3 @@ Container
 Destructible_obj
 Node
 StaticBody2D
-TileMapLayer

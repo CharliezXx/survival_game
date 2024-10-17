@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwi6gmc8fr0j6"]
+
+[ext_resource type="Texture2D" uid="uid://cwu3uorfmx0wl" path="res://Asset/Item/birch_log.png" id="1_wpoj4"]
+
+[node name="ItemLogBirch" type="Node2D"]
+texture_filter = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_wpoj4")

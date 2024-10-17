@@ -41,12 +41,11 @@ var arr_grass =[]
 ############################################
 @export_group("Random Object Generation")
 @export var random_size:bool=true
+@export_range(1,2) var max_random_size:float = 1.2
 @export var random_facing:bool=true
 @export var obj:Array[Dictionary]
 
-var rock_obj ={
-	
-}
+
 #Player
 
 var isplayer_spawn:bool=false
@@ -139,20 +138,20 @@ func  gen_world():
 						var change = randf_range(0,1)
 						if not Engine.is_editor_hint():
 							if change < 0.1 and change >0.06:
-								gen_obj(grass_layer,obj[0],"normal_tree1",x,y)
+								gen_obj(grass_layer,obj[0],"oak_tree",x,y)
 							elif change <= 0.05:
-								gen_obj(grass_layer,obj[0],"short_tree1",x,y)
+								gen_obj(grass_layer,obj[0],"oak_sapling",x,y)
 							elif change <0.15 and change >0.09:
-								gen_obj(grass_layer,obj[0],"normal_tree3",x,y)
+								gen_obj(grass_layer,obj[0],"birch_tree",x,y)
 							
 								
 					if temperature	<0:
 						var change = randf_range(0,1)
 						if not Engine.is_editor_hint():
 							if change < 0.1 and change >0.06:
-								gen_obj(grass_layer,obj[0],"normal_tree2",x,y)
+								gen_obj(grass_layer,obj[0],"small_spruce_tree",x,y)
 							if change < 0.15 and change >0.09:
-								gen_obj(grass_layer,obj[0],"normal_tree4",x,y)
+								gen_obj(grass_layer,obj[0],"spruce_tree",x,y)
 								
 								
 				if 4 > altitude and altitude > -4 :
@@ -172,6 +171,7 @@ func  gen_world():
 					###############	
 
 
+
 # This Function use for generate node scene 
 func gen_obj(layer:int,obj:Dictionary,key:String,x_from_loop:int,y_from_loop:int):
 	var object_to_place = obj[key].instantiate() as Node2D
@@ -179,15 +179,16 @@ func gen_obj(layer:int,obj:Dictionary,key:String,x_from_loop:int,y_from_loop:int
 	object_to_place.position = tile_pos
 	
 	## For random size and facing
-	var rand_x = randi_range(0,1)
-	var rand_y = randf_range(1.0,1.2)
+	var rand_facing = randi_range(0,1)
+	var rand_size = randf_range(1.0,max_random_size)
 	if random_facing == true:
-		if rand_x ==1:
-			object_to_place.scale.x = -1
+		if rand_facing ==1:
+			object_to_place.scale.x = -1 * rand_size
 		else :
-			object_to_place.scale.x = 1
+			object_to_place.scale.x = 1 * rand_size
 	if random_size == true:
-		object_to_place.scale.y = rand_y	
+		object_to_place.scale.y = rand_size
+			
 	add_child(object_to_place)
 	object_to_place.name = "obj_1"
 	pass
