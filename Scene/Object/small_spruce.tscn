@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://drickahwgq0db"]
+[gd_scene load_steps=6 format=3 uid="uid://drickahwgq0db"]
 
 [ext_resource type="Script" path="res://Script/Destructible_obj.gd" id="1_b7y5l"]
 [ext_resource type="Material" uid="uid://c5vp45p3rvvyk" path="res://Shaders/tree_shader_mat.tres" id="2_o1c4w"]
+[ext_resource type="PackedScene" uid="uid://ccti4qnhn7p5j" path="res://Scene/Item/item_log_spruce.tscn" id="2_t0dfh"]
 [ext_resource type="Texture2D" uid="uid://ct7s0jvi24dmj" path="res://Asset/Object/tree2.png" id="3_2k62f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ec3gn"]
@@ -14,6 +15,8 @@ script = ExtResource("1_b7y5l")
 obj_node = NodePath(".")
 clickable_area = NodePath("Area2D")
 health = 15
+have_drop = true
+item_drop_scene = ExtResource("2_t0dfh")
 
 [node name="Area2D" type="Area2D" parent="."]
 

@@ -1,9 +1,9 @@
+MapCamera2D
+AnimationPlayer
 TileMapLayer
+AnimationTree
 Sprite2D
 Dropable_item
-AnimationPlayer
-AnimationTree
-MapCamera2D
 CollisionShape2D
 Area2D
 Control

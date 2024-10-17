@@ -1,7 +1,7 @@
 extends Node2D
 
 class_name Destructible_obj
-var main_scene : PackedScene = preload("res://Scene/world_generation.tscn")
+var main_scene : PackedScene = preload("res://Scene/world_generate.tscn")
 @export var obj_node: Node2D
 @export var clickable_area: Area2D
 @export var anim :AnimationPlayer
@@ -35,7 +35,7 @@ func do_dmg() -> void:
 func destroy():
 	if obj_node:
 		if !have_drop:
-			print("Assign item drop first!")
+			print("This item don't have drop , Assign drop item")
 		else:
 			 # Instance the item drop scene and set its position
 			var dropped_item = item_drop_scene.instantiate()  # make node2d from packed scene

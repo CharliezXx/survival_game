@@ -6,4 +6,6 @@
 texture_filter = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
 texture = ExtResource("1_wpoj4")
+offset = Vector2(0, -7)

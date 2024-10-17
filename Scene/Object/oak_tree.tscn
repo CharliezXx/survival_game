@@ -1,16 +1,53 @@
-[gd_scene load_steps=7 format=3 uid="uid://j70qoin6t0nf"]
+[gd_scene load_steps=9 format=3 uid="uid://j70qoin6t0nf"]
 
 [ext_resource type="Script" path="res://Script/Destructible_obj.gd" id="1_jvpfa"]
-[ext_resource type="PackedScene" uid="uid://d1rbvjax3hjfm" path="res://Scene/Item/item_log_oak.tscn" id="2_di1o5"]
+[ext_resource type="PackedScene" uid="uid://btxxoxei8c770" path="res://Scene/Item/item_log_oak.tscn" id="2_di1o5"]
 [ext_resource type="Material" uid="uid://c5vp45p3rvvyk" path="res://Shaders/tree_shader_mat.tres" id="3_tbnwe"]
 [ext_resource type="Texture2D" uid="uid://y6n0ffh71b3l" path="res://Asset/Object/tree1.png" id="4_uqstg"]
-[ext_resource type="PackedScene" uid="uid://d30svibw15yim" path="res://anim/obj_hit_anim.tscn" id="5_8vs3e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ec3gn"]
 size = Vector2(20, 27)
 
+[sub_resource type="Animation" id="Animation_11ny7"]
+resource_name = "obj_hit"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.2, 0.8), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ccyk5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_57un0"]
+_data = {
+"RESET": SubResource("Animation_ccyk5"),
+"obj_hit": SubResource("Animation_11ny7")
+}
+
 [node name="oak_tree" type="Node2D" node_paths=PackedStringArray("obj_node", "clickable_area", "anim")]
 y_sort_enabled = true
+material = ExtResource("3_tbnwe")
 script = ExtResource("1_jvpfa")
 obj_node = NodePath(".")
 clickable_area = NodePath("Area2D")
@@ -32,7 +69,7 @@ material = ExtResource("3_tbnwe")
 texture = ExtResource("4_uqstg")
 offset = Vector2(0, -30.225)
 
-[node name="AnimationPlayer" parent="Sprite2D" instance=ExtResource("5_8vs3e")]
-
-[node name="Node2D" parent="." instance=ExtResource("2_di1o5")]
-visible = false
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_57un0")
+}
