@@ -1,22 +1,21 @@
-[gd_scene load_steps=14 format=3 uid="uid://j70qoin6t0nf"]
+[gd_scene load_steps=13 format=3 uid="uid://wewyv5bsy2ej"]
 
-[ext_resource type="Script" path="res://Script/Destructible_obj.gd" id="1_jvpfa"]
-[ext_resource type="PackedScene" uid="uid://btxxoxei8c770" path="res://Scene/Item/item_log_oak.tscn" id="2_di1o5"]
-[ext_resource type="Material" uid="uid://c5vp45p3rvvyk" path="res://Shaders/tree_shader_mat.tres" id="3_tbnwe"]
-[ext_resource type="Texture2D" uid="uid://y6n0ffh71b3l" path="res://Asset/Object/tree1.png" id="4_uqstg"]
+[ext_resource type="Script" path="res://Script/Destructible_obj.gd" id="1_nr4dx"]
+[ext_resource type="Material" uid="uid://c5vp45p3rvvyk" path="res://Shaders/tree_shader_mat.tres" id="3_h2a4u"]
+[ext_resource type="Texture2D" uid="uid://dt085gwqdybcs" path="res://Asset/Terrarin_tile/grass.png" id="3_weonn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ec3gn"]
-size = Vector2(20, 27)
+size = Vector2(26, 18.485)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_43ak2"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_2vrbg"]
 radius = 59.0
 
-[sub_resource type="Animation" id="Animation_ccyk5"]
+[sub_resource type="Animation" id="Animation_8sn0i"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
+tracks/0/path = NodePath("Sprite2D:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -26,13 +25,13 @@ tracks/0/keys = {
 "values": [Vector2(1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_11ny7"]
+[sub_resource type="Animation" id="Animation_2sfrw"]
 resource_name = "obj_hit"
 length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
+tracks/0/path = NodePath("Sprite2D:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -42,62 +41,59 @@ tracks/0/keys = {
 "values": [Vector2(1, 1), Vector2(1.2, 0.8), Vector2(1, 1)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_57un0"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o337w"]
 _data = {
-"RESET": SubResource("Animation_ccyk5"),
-"obj_hit": SubResource("Animation_11ny7")
+"RESET": SubResource("Animation_8sn0i"),
+"obj_hit": SubResource("Animation_2sfrw")
 }
 
-[sub_resource type="Curve" id="Curve_s6agl"]
+[sub_resource type="Curve" id="Curve_p6o6h"]
 _data = [Vector2(0.625514, 0.802198), 0.0, 0.0, 0, 0]
 point_count = 1
 
-[sub_resource type="CurveTexture" id="CurveTexture_fw1av"]
-curve = SubResource("Curve_s6agl")
+[sub_resource type="CurveTexture" id="CurveTexture_4sa15"]
+curve = SubResource("Curve_p6o6h")
 
-[sub_resource type="Curve" id="Curve_2b00k"]
+[sub_resource type="Curve" id="Curve_fi1fb"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.506173, 0.89011), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_65d8q"]
-curve = SubResource("Curve_2b00k")
+[sub_resource type="CurveTexture" id="CurveTexture_vtclc"]
+curve = SubResource("Curve_fi1fb")
 
-[node name="oak_tree" type="Node2D" node_paths=PackedStringArray("obj_node", "clickable_area", "Interactable_zone", "anim", "health_bar")]
+[node name="Grass_normal" type="Node2D" node_paths=PackedStringArray("obj_node", "clickable_area", "Interactable_zone", "anim", "health_bar")]
 y_sort_enabled = true
-material = ExtResource("3_tbnwe")
-script = ExtResource("1_jvpfa")
+texture_filter = 1
+script = ExtResource("1_nr4dx")
 obj_node = NodePath(".")
 clickable_area = NodePath("Area2D")
 Interactable_zone = NodePath("InteractableZone")
 anim = NodePath("AnimationPlayer")
-health = 15
-have_drop = true
-item_drop_scene = ExtResource("2_di1o5")
+health = 2
 health_bar = NodePath("HealthBar")
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-1, -14.5)
+position = Vector2(4.76837e-07, -9.7575)
 shape = SubResource("RectangleShape2D_ec3gn")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-y_sort_enabled = true
-texture_filter = 1
-material = ExtResource("3_tbnwe")
-texture = ExtResource("4_uqstg")
-offset = Vector2(0, -30.225)
 
 [node name="InteractableZone" type="Area2D" parent="."]
 
 [node name="InteractableZone" type="CollisionShape2D" parent="InteractableZone"]
 position = Vector2(0, -6)
-shape = SubResource("CircleShape2D_43ak2")
+shape = SubResource("CircleShape2D_2vrbg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
+texture_filter = 1
+material = ExtResource("3_h2a4u")
+texture = ExtResource("3_weonn")
+offset = Vector2(0, -16)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("../Sprite2D")
 libraries = {
-"": SubResource("AnimationLibrary_57un0")
+"": SubResource("AnimationLibrary_o337w")
 }
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
@@ -117,7 +113,7 @@ scale = Vector2(1, 2)
 value = 70.0
 fill_mode = 6
 nine_patch_stretch = true
-texture_under = SubResource("CurveTexture_fw1av")
-texture_progress = SubResource("CurveTexture_65d8q")
+texture_under = SubResource("CurveTexture_4sa15")
+texture_progress = SubResource("CurveTexture_vtclc")
 tint_under = Color(1, 0, 0, 1)
 tint_progress = Color(0.266667, 1, 0, 1)

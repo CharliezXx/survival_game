@@ -78,8 +78,7 @@ health_bar = NodePath("HealthBar")
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-visible = false
-position = Vector2(3, -12.75)
+position = Vector2(-1.775, -12.395)
 shape = SubResource("RectangleShape2D_ec3gn")
 
 [node name="InteractableZone" type="Area2D" parent="."]

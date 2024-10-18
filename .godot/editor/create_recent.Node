@@ -1,8 +1,9 @@
+Sprite2D
+MeshInstance2D
 AnimationPlayer
 Panel
 Container
 ColorRect
-Sprite2D
 Node2D
 TextureProgressBar
 ProgressBar
@@ -11,4 +12,3 @@ CollisionShape2D
 Timer
 MapCamera2D
 TileMapLayer
-AnimationTree

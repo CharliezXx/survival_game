@@ -1,16 +1,77 @@
-[gd_scene load_steps=5 format=3 uid="uid://bj8dgaquj8buu"]
+[gd_scene load_steps=14 format=3 uid="uid://bj8dgaquj8buu"]
 
 [ext_resource type="Script" path="res://Script/Destructible_obj.gd" id="1_s3gl5"]
+[ext_resource type="PackedScene" uid="uid://d0t5o0y3ldnk5" path="res://Scene/Item/item_pile_of_stick.tscn" id="2_2y6nn"]
 [ext_resource type="Material" uid="uid://c5vp45p3rvvyk" path="res://Shaders/tree_shader_mat.tres" id="2_bdijx"]
 [ext_resource type="Texture2D" uid="uid://b8omphgk0101n" path="res://Asset/Object/short_tree1.png" id="3_q72qh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4a7nk"]
 size = Vector2(16, 26)
 
-[node name="short_tree1" type="Node2D" node_paths=PackedStringArray("clickable_area")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_t1i8x"]
+radius = 59.0
+
+[sub_resource type="Animation" id="Animation_0p1va"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_faalo"]
+resource_name = "obj_hit"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.2, 0.8), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qxlkq"]
+_data = {
+"RESET": SubResource("Animation_0p1va"),
+"obj_hit": SubResource("Animation_faalo")
+}
+
+[sub_resource type="Curve" id="Curve_gye3w"]
+_data = [Vector2(0.625514, 0.802198), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="CurveTexture" id="CurveTexture_cpa4a"]
+curve = SubResource("Curve_gye3w")
+
+[sub_resource type="Curve" id="Curve_u25en"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.506173, 0.89011), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_aw8mk"]
+curve = SubResource("Curve_u25en")
+
+[node name="short_tree1" type="Node2D" node_paths=PackedStringArray("obj_node", "clickable_area", "Interactable_zone", "anim", "health_bar")]
 y_sort_enabled = true
 script = ExtResource("1_s3gl5")
+obj_node = NodePath(".")
 clickable_area = NodePath("Sprite2D/Area2D")
+Interactable_zone = NodePath("InteractableZone")
+anim = NodePath("AnimationPlayer")
+have_drop = true
+item_drop_scene = ExtResource("2_2y6nn")
+health_bar = NodePath("HealthBar")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
@@ -24,3 +85,37 @@ offset = Vector2(0, -28.825)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
 position = Vector2(0, -13)
 shape = SubResource("RectangleShape2D_4a7nk")
+
+[node name="InteractableZone" type="Area2D" parent="."]
+
+[node name="InteractableZone" type="CollisionShape2D" parent="InteractableZone"]
+position = Vector2(0, -6)
+shape = SubResource("CircleShape2D_t1i8x")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
+libraries = {
+"": SubResource("AnimationLibrary_qxlkq")
+}
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+z_index = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -7.0
+offset_top = 1.0
+offset_right = 7.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 2)
+value = 70.0
+fill_mode = 6
+nine_patch_stretch = true
+texture_under = SubResource("CurveTexture_cpa4a")
+texture_progress = SubResource("CurveTexture_aw8mk")
+tint_under = Color(1, 0, 0, 1)
+tint_progress = Color(0.266667, 1, 0, 1)
