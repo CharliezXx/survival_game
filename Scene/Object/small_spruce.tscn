@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://drickahwgq0db"]
+[gd_scene load_steps=11 format=3 uid="uid://drickahwgq0db"]
 
 [ext_resource type="Script" path="res://Script/Destructible_obj.gd" id="1_b7y5l"]
 [ext_resource type="Material" uid="uid://c5vp45p3rvvyk" path="res://Shaders/tree_shader_mat.tres" id="2_o1c4w"]
@@ -8,15 +8,34 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ec3gn"]
 size = Vector2(20, 25)
 
-[node name="Tree_1" type="Node2D" node_paths=PackedStringArray("obj_node", "clickable_area")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_uh1mx"]
+radius = 59.0
+
+[sub_resource type="Curve" id="Curve_df7sm"]
+_data = [Vector2(0.625514, 0.802198), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="CurveTexture" id="CurveTexture_a64et"]
+curve = SubResource("Curve_df7sm")
+
+[sub_resource type="Curve" id="Curve_4e183"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.506173, 0.89011), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_fqect"]
+curve = SubResource("Curve_4e183")
+
+[node name="Tree_1" type="Node2D" node_paths=PackedStringArray("obj_node", "clickable_area", "Interactable_zone", "health_bar")]
 y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_b7y5l")
 obj_node = NodePath(".")
 clickable_area = NodePath("Area2D")
-health = 15
+Interactable_zone = NodePath("InteractableZone")
+health = 8
 have_drop = true
 item_drop_scene = ExtResource("2_t0dfh")
+health_bar = NodePath("HealthBar")
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -24,9 +43,37 @@ item_drop_scene = ExtResource("2_t0dfh")
 position = Vector2(-1, -13.5)
 shape = SubResource("RectangleShape2D_ec3gn")
 
+[node name="InteractableZone" type="Area2D" parent="."]
+
+[node name="InteractableZone" type="CollisionShape2D" parent="InteractableZone"]
+position = Vector2(0, -6)
+shape = SubResource("CircleShape2D_uh1mx")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
 texture_filter = 1
 material = ExtResource("2_o1c4w")
 texture = ExtResource("3_2k62f")
 offset = Vector2(0, -30.225)
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+z_index = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -7.0
+offset_top = 1.0
+offset_right = 7.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 2)
+value = 70.0
+fill_mode = 6
+nine_patch_stretch = true
+texture_under = SubResource("CurveTexture_a64et")
+texture_progress = SubResource("CurveTexture_fqect")
+tint_under = Color(1, 0, 0, 1)
+tint_progress = Color(0.266667, 1, 0, 1)

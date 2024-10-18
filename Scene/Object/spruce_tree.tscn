@@ -48,19 +48,19 @@ _data = {
 "obj_hit": SubResource("Animation_2sfrw")
 }
 
-[sub_resource type="Curve" id="Curve_df7sm"]
+[sub_resource type="Curve" id="Curve_p6o6h"]
 _data = [Vector2(0.625514, 0.802198), 0.0, 0.0, 0, 0]
 point_count = 1
 
 [sub_resource type="CurveTexture" id="CurveTexture_4sa15"]
-curve = SubResource("Curve_df7sm")
+curve = SubResource("Curve_p6o6h")
 
-[sub_resource type="Curve" id="Curve_4e183"]
+[sub_resource type="Curve" id="Curve_fi1fb"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.506173, 0.89011), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_vtclc"]
-curve = SubResource("Curve_4e183")
+curve = SubResource("Curve_fi1fb")
 
 [node name="Tree_1" type="Node2D" node_paths=PackedStringArray("obj_node", "clickable_area", "Interactable_zone", "anim", "health_bar")]
 y_sort_enabled = true
@@ -70,7 +70,6 @@ obj_node = NodePath(".")
 clickable_area = NodePath("Area2D")
 Interactable_zone = NodePath("InteractableZone")
 anim = NodePath("AnimationPlayer")
-health = 15
 have_drop = true
 item_drop_scene = ExtResource("2_yf2yl")
 health_bar = NodePath("HealthBar")

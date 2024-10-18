@@ -28,32 +28,32 @@ func _ready() -> void:
 		Interactable_zone.connect("area_entered", player_entered_area)
 		Interactable_zone.connect("area_exited", player_exited_area)
 		
+		
+func _process(delta: float) -> void:
+	if health_bar:
+		if  player_in_area and is_pointing:
+			health_bar.visible = true
+		else:
+			health_bar.visible = false
+
 func player_entered_area(area):
 	if area.name =="Player_area":
 		print("entered")
 		player_in_area = true
 func player_exited_area(area):
-	if health_bar:
-		health_bar.visible = false
 	if area.name =="Player_area":
 		print("exited")
 		player_in_area = false
 		
 		restore_health()
 func _mouse_entered():
-	if health_bar and player_in_area:
-		health_bar.visible = true
+	is_pointing = true
 func check_pointing():
-	if health_bar:
-		health_bar.visible = false
 	is_pointing	= false
-	
 	
 func _on_clickable_area_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		is_pointing = true
-		if health_bar and player_in_area and is_pointing:
-			health_bar.visible = true
 		if event.pressed and Input.is_action_pressed("left_click") and player_in_area:
 			do_dmg()
 			if anim:
@@ -81,8 +81,6 @@ func destroy():
 			 # Instance the item drop scene and set its position
 			var dropped_item = item_drop_scene.instantiate()  # make node2d from packed scene
 			dropped_item.position = global_position
-			dropped_item.position += Vector2(1,1)*10
-
 			get_parent().add_child(dropped_item)  # Add the dropped item to the scene
 	queue_free()
 	
