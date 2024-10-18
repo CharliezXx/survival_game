@@ -186,6 +186,7 @@ func gen_obj(layer:int,obj:Dictionary,key:String,x_from_loop:int,y_from_loop:int
 			object_to_place.scale.x = -1 * rand_size
 		else :
 			object_to_place.scale.x = 1 * rand_size
+			
 	if random_size == true:
 		object_to_place.scale.y = rand_size
 			

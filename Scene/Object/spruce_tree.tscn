@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ruse0osrqh83"]
+[gd_scene load_steps=14 format=3 uid="uid://ruse0osrqh83"]
 
 [ext_resource type="Script" path="res://Script/Destructible_obj.gd" id="1_0jufc"]
 [ext_resource type="Material" uid="uid://c5vp45p3rvvyk" path="res://Shaders/tree_shader_mat.tres" id="2_o7flw"]
@@ -9,7 +9,7 @@
 size = Vector2(20, 26.25)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2vrbg"]
-radius = 86.0058
+radius = 59.0
 
 [sub_resource type="Animation" id="Animation_2sfrw"]
 resource_name = "obj_hit"
@@ -48,7 +48,21 @@ _data = {
 "obj_hit": SubResource("Animation_2sfrw")
 }
 
-[node name="Tree_1" type="Node2D" node_paths=PackedStringArray("obj_node", "clickable_area", "Interactable_zone", "anim")]
+[sub_resource type="Curve" id="Curve_df7sm"]
+_data = [Vector2(0.432099, 0.659341), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="CurveTexture" id="CurveTexture_4sa15"]
+curve = SubResource("Curve_df7sm")
+
+[sub_resource type="Curve" id="Curve_4e183"]
+_data = [Vector2(0.534979, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="CurveTexture" id="CurveTexture_vtclc"]
+curve = SubResource("Curve_4e183")
+
+[node name="Tree_1" type="Node2D" node_paths=PackedStringArray("obj_node", "clickable_area", "Interactable_zone", "anim", "health_bar")]
 y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_0jufc")
@@ -59,6 +73,7 @@ anim = NodePath("AnimationPlayer")
 health = 15
 have_drop = true
 item_drop_scene = ExtResource("2_yf2yl")
+health_bar = NodePath("TextureProgressBar")
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -69,6 +84,7 @@ shape = SubResource("RectangleShape2D_ec3gn")
 [node name="InteractableZone" type="Area2D" parent="."]
 
 [node name="InteractableZone" type="CollisionShape2D" parent="InteractableZone"]
+position = Vector2(0, -6)
 shape = SubResource("CircleShape2D_2vrbg")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -76,9 +92,22 @@ y_sort_enabled = true
 texture_filter = 1
 material = ExtResource("2_o7flw")
 texture = ExtResource("3_7yyxa")
-offset = Vector2(0, -30.225)
+offset = Vector2(2.35, -30.225)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_o337w")
 }
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+offset_left = -6.0
+offset_top = 1.0
+offset_right = 34.0
+offset_bottom = 41.0
+scale = Vector2(0.28, 0.04)
+value = 36.0
+nine_patch_stretch = true
+texture_under = SubResource("CurveTexture_4sa15")
+texture_progress = SubResource("CurveTexture_vtclc")
+tint_under = Color(1, 0, 0, 1)
+tint_progress = Color(0.266667, 1, 0, 1)

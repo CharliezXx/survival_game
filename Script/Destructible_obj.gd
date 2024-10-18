@@ -9,13 +9,20 @@ var main_scene : PackedScene = preload("res://Scene/world_generate.tscn")
 @export var health: int = 10
 @export var have_drop:bool
 @export var item_drop_scene:PackedScene
+var is_pointing:bool
 var player_in_area:bool
 var max_health
+@export var health_bar:TextureProgressBar 
 func _ready() -> void:
+	
 	max_health = health
+	update_health_bar()
+	if health_bar:
+		health_bar.visible = false
 	# Connect the input event for the clickable area
 	clickable_area.connect("input_event",_on_clickable_area_input_event)
-	clickable_area.connect("mouse_exited",restore_health)
+	clickable_area.connect("mouse_exited",check_pointing)
+	
 	if Interactable_zone:
 		Interactable_zone.connect("area_entered", player_entered_area)
 		Interactable_zone.connect("area_exited", player_exited_area)
@@ -25,18 +32,32 @@ func player_entered_area(area):
 		print("entered")
 		player_in_area = true
 func player_exited_area(area):
+	if health_bar:
+			health_bar.visible = false
 	if area.name =="Player_area":
 		print("exited")
 		player_in_area = false
+		restore_health()
+func check_pointing():
+	is_pointing	= false
+	
 	
 func _on_clickable_area_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
+		is_pointing = true
+		if health_bar:
+			health_bar.visible = true
 		if event.pressed and Input.is_action_pressed("left_click") and player_in_area:
 			do_dmg()
 			if anim:
 				anim.play("obj_hit")
+			update_health_bar()
 func restore_health():
-	health = max_health
+	if !player_in_area:
+		health = max_health
+		update_health_bar()
+	if is_pointing and player_in_area:
+		update_health_bar()
 		
 func do_dmg() -> void:
 	if health > 0:  # Check if health is greater than zero
@@ -57,3 +78,7 @@ func destroy():
 
 			get_parent().add_child(dropped_item)  # Add the dropped item to the scene
 	queue_free()
+	
+func update_health_bar():
+	if health_bar:
+		health_bar.value= float(health) / max_health * 100 

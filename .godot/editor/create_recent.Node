@@ -1,3 +1,5 @@
+TextureProgressBar
+ProgressBar
 Node2D
 Area2D
 CollisionShape2D
@@ -10,6 +12,3 @@ Sprite2D
 Dropable_item
 Control
 Container
-Destructible_obj
-Node
-StaticBody2D
