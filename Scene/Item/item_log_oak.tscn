@@ -3,12 +3,11 @@
 [ext_resource type="Script" path="res://Script/dropable_item.gd" id="1_3g2en"]
 [ext_resource type="Texture2D" uid="uid://ba5kymthx0csw" path="res://Asset/Item/oak_log.png" id="2_tmseq"]
 
-[node name="Node2D" type="Node2D" node_paths=PackedStringArray("sprite")]
+[node name="Node2D" type="Node2D"]
 y_sort_enabled = true
-script = ExtResource("1_3g2en")
-sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = ExtResource("2_tmseq")
 offset = Vector2(0, -7)
+script = ExtResource("1_3g2en")

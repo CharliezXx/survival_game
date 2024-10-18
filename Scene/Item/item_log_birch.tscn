@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bwi6gmc8fr0j6"]
+[gd_scene load_steps=3 format=3 uid="uid://bwi6gmc8fr0j6"]
 
 [ext_resource type="Texture2D" uid="uid://cwu3uorfmx0wl" path="res://Asset/Item/birch_log.png" id="1_wpoj4"]
+[ext_resource type="Script" path="res://Script/dropable_item.gd" id="2_i52yu"]
 
 [node name="ItemLogBirch" type="Node2D"]
 texture_filter = 1
@@ -9,3 +10,4 @@ texture_filter = 1
 y_sort_enabled = true
 texture = ExtResource("1_wpoj4")
 offset = Vector2(0, -7)
+script = ExtResource("2_i52yu")

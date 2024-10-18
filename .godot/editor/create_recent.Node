@@ -1,11 +1,13 @@
+Node2D
+Area2D
+CollisionShape2D
+Timer
 MapCamera2D
 AnimationPlayer
 TileMapLayer
 AnimationTree
 Sprite2D
 Dropable_item
-CollisionShape2D
-Area2D
 Control
 Container
 Destructible_obj

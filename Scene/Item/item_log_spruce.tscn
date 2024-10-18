@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://ccti4qnhn7p5j"]
+[gd_scene load_steps=3 format=3 uid="uid://ccti4qnhn7p5j"]
 
 [ext_resource type="Texture2D" uid="uid://yqqiliiyf30o" path="res://Asset/Item/spruce_log.png" id="1_tm4l3"]
+[ext_resource type="Script" path="res://Script/dropable_item.gd" id="2_8vh45"]
 
 [node name="Node2D" type="Node2D"]
 y_sort_enabled = true
@@ -9,3 +10,4 @@ y_sort_enabled = true
 texture_filter = 1
 texture = ExtResource("1_tm4l3")
 offset = Vector2(0, -7)
+script = ExtResource("2_8vh45")

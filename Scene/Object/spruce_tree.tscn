@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ruse0osrqh83"]
+[gd_scene load_steps=10 format=3 uid="uid://ruse0osrqh83"]
 
 [ext_resource type="Script" path="res://Script/Destructible_obj.gd" id="1_0jufc"]
 [ext_resource type="Material" uid="uid://c5vp45p3rvvyk" path="res://Shaders/tree_shader_mat.tres" id="2_o7flw"]
@@ -7,6 +7,9 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ec3gn"]
 size = Vector2(20, 26.25)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2vrbg"]
+radius = 86.0058
 
 [sub_resource type="Animation" id="Animation_2sfrw"]
 resource_name = "obj_hit"
@@ -45,12 +48,13 @@ _data = {
 "obj_hit": SubResource("Animation_2sfrw")
 }
 
-[node name="Tree_1" type="Node2D" node_paths=PackedStringArray("obj_node", "clickable_area", "anim")]
+[node name="Tree_1" type="Node2D" node_paths=PackedStringArray("obj_node", "clickable_area", "Interactable_zone", "anim")]
 y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_0jufc")
 obj_node = NodePath(".")
 clickable_area = NodePath("Area2D")
+Interactable_zone = NodePath("InteractableZone")
 anim = NodePath("AnimationPlayer")
 health = 15
 have_drop = true
@@ -61,6 +65,11 @@ item_drop_scene = ExtResource("2_yf2yl")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(-3, -12.875)
 shape = SubResource("RectangleShape2D_ec3gn")
+
+[node name="InteractableZone" type="Area2D" parent="."]
+
+[node name="InteractableZone" type="CollisionShape2D" parent="InteractableZone"]
+shape = SubResource("CircleShape2D_2vrbg")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
