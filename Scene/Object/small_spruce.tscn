@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://drickahwgq0db"]
+[gd_scene load_steps=14 format=3 uid="uid://drickahwgq0db"]
 
 [ext_resource type="Script" path="res://Script/Destructible_obj.gd" id="1_b7y5l"]
 [ext_resource type="Material" uid="uid://c5vp45p3rvvyk" path="res://Shaders/tree_shader_mat.tres" id="2_o1c4w"]
@@ -11,27 +11,65 @@ size = Vector2(20, 25)
 [sub_resource type="CircleShape2D" id="CircleShape2D_uh1mx"]
 radius = 59.0
 
-[sub_resource type="Curve" id="Curve_df7sm"]
+[sub_resource type="Animation" id="Animation_gruyn"]
+resource_name = "obj_hit"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.2, 0.8), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_d34si"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_str3l"]
+_data = {
+"RESET": SubResource("Animation_d34si"),
+"obj_hit": SubResource("Animation_gruyn")
+}
+
+[sub_resource type="Curve" id="Curve_ffmt8"]
 _data = [Vector2(0.625514, 0.802198), 0.0, 0.0, 0, 0]
 point_count = 1
 
 [sub_resource type="CurveTexture" id="CurveTexture_a64et"]
-curve = SubResource("Curve_df7sm")
+curve = SubResource("Curve_ffmt8")
 
-[sub_resource type="Curve" id="Curve_4e183"]
+[sub_resource type="Curve" id="Curve_0rwgp"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.506173, 0.89011), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_fqect"]
-curve = SubResource("Curve_4e183")
+curve = SubResource("Curve_0rwgp")
 
-[node name="Tree_1" type="Node2D" node_paths=PackedStringArray("obj_node", "clickable_area", "Interactable_zone", "health_bar")]
+[node name="Tree_1" type="Node2D" node_paths=PackedStringArray("obj_node", "clickable_area", "Interactable_zone", "anim", "health_bar")]
 y_sort_enabled = true
 texture_filter = 1
 script = ExtResource("1_b7y5l")
 obj_node = NodePath(".")
 clickable_area = NodePath("Area2D")
 Interactable_zone = NodePath("InteractableZone")
+anim = NodePath("AnimationPlayer")
 health = 8
 have_drop = true
 item_drop_scene = ExtResource("2_t0dfh")
@@ -55,6 +93,12 @@ texture_filter = 1
 material = ExtResource("2_o1c4w")
 texture = ExtResource("3_2k62f")
 offset = Vector2(0, -30.225)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
+libraries = {
+"": SubResource("AnimationLibrary_str3l")
+}
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
 z_index = 2
