@@ -142,6 +142,11 @@ collision_layer = 2
 script = ExtResource("1_pt082")
 SPEED = 150.0
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+y_sort_enabled = true
+position = Vector2(0, -7.0338)
+shape = SubResource("CircleShape2D_u1fyx")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
 texture_filter = 1
@@ -152,6 +157,8 @@ offset = Vector2(0, -18.83)
 [node name="Player_area" type="Area2D" parent="."]
 position = Vector2(0, -7.97)
 scale = Vector2(1.174, 1.174)
+collision_layer = 3
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player_area"]
 y_sort_enabled = true
