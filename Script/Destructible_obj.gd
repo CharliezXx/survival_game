@@ -21,6 +21,7 @@ func _ready() -> void:
 		health_bar.visible = false
 	# Connect the input event for the clickable area
 	clickable_area.connect("input_event",_on_clickable_area_input_event)
+	clickable_area.connect("mouse_entered",_mouse_entered)
 	clickable_area.connect("mouse_exited",check_pointing)
 	
 	if Interactable_zone:
@@ -33,19 +34,25 @@ func player_entered_area(area):
 		player_in_area = true
 func player_exited_area(area):
 	if health_bar:
-			health_bar.visible = false
+		health_bar.visible = false
 	if area.name =="Player_area":
 		print("exited")
 		player_in_area = false
+		
 		restore_health()
+func _mouse_entered():
+	if health_bar and player_in_area:
+		health_bar.visible = true
 func check_pointing():
+	if health_bar:
+		health_bar.visible = false
 	is_pointing	= false
 	
 	
 func _on_clickable_area_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		is_pointing = true
-		if health_bar:
+		if health_bar and player_in_area and is_pointing:
 			health_bar.visible = true
 		if event.pressed and Input.is_action_pressed("left_click") and player_in_area:
 			do_dmg()

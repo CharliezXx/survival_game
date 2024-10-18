@@ -49,15 +49,15 @@ _data = {
 }
 
 [sub_resource type="Curve" id="Curve_df7sm"]
-_data = [Vector2(0.432099, 0.659341), 0.0, 0.0, 0, 0]
+_data = [Vector2(0.625514, 0.802198), 0.0, 0.0, 0, 0]
 point_count = 1
 
 [sub_resource type="CurveTexture" id="CurveTexture_4sa15"]
 curve = SubResource("Curve_df7sm")
 
 [sub_resource type="Curve" id="Curve_4e183"]
-_data = [Vector2(0.534979, 1), 0.0, 0.0, 0, 0]
-point_count = 1
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.506173, 0.89011), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_vtclc"]
 curve = SubResource("Curve_4e183")
@@ -73,7 +73,7 @@ anim = NodePath("AnimationPlayer")
 health = 15
 have_drop = true
 item_drop_scene = ExtResource("2_yf2yl")
-health_bar = NodePath("TextureProgressBar")
+health_bar = NodePath("HealthBar")
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -99,13 +99,22 @@ libraries = {
 "": SubResource("AnimationLibrary_o337w")
 }
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
-offset_left = -6.0
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+z_index = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -7.0
 offset_top = 1.0
-offset_right = 34.0
-offset_bottom = 41.0
-scale = Vector2(0.28, 0.04)
-value = 36.0
+offset_right = 7.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 2)
+value = 70.0
+fill_mode = 6
 nine_patch_stretch = true
 texture_under = SubResource("CurveTexture_4sa15")
 texture_progress = SubResource("CurveTexture_vtclc")

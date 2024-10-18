@@ -181,19 +181,21 @@ func gen_obj(layer:int,obj:Dictionary,key:String,x_from_loop:int,y_from_loop:int
 	## For random size and facing
 	var rand_facing = randi_range(0,1)
 	var rand_size = randf_range(1.0,max_random_size)
-	if random_facing == true:
-		if rand_facing ==1:
+	
+	if random_facing:
+		if rand_facing:
 			object_to_place.scale.x = -1 * rand_size
 		else :
 			object_to_place.scale.x = 1 * rand_size
 			
-	if random_size == true:
+	if random_size:
 		object_to_place.scale.y = rand_size
 			
 	add_child(object_to_place)
 	object_to_place.name = "obj_1"
+	
 	pass
-
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
