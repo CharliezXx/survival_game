@@ -8,7 +8,7 @@
 - [X] Add Player charcter 
 - [X] Destroy Environment 
 - [X] Evironmet Hp  
-- [ ] Collectable item from environment                 
+- [x] Collectable item from environment                 
 - [ ] Add Hp of the player                            
 - [ ] Add Enemy and ai of it                                
 - [ ] Make Player can take damage from enemy
