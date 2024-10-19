@@ -137,12 +137,20 @@ func  gen_world():
 					if  temperature > 0.2:
 						var change = randf_range(0,1)
 						if not Engine.is_editor_hint():
-							if change < 0.1 and change >0.06:
+							if change >0.1 and change <0.13:
+								gen_obj(grass_layer,obj[0],"grass_normal",x,y)
+							elif change < 0.1 and change >0.06:
 								gen_obj(grass_layer,obj[0],"oak_tree",x,y)
 							elif change <= 0.05:
 								gen_obj(grass_layer,obj[0],"oak_sapling",x,y)
 							elif change <0.15 and change >0.09:
 								gen_obj(grass_layer,obj[0],"birch_tree",x,y)
+					if  temperature >= 0 and temperature<0.2:
+							var change = randf_range(0,1)
+							if change >0.8:
+								gen_obj(grass_layer,obj[0],"grass_normal",x,y)
+							elif change >0.5:
+								gen_obj(grass_layer,obj[0],"short_grass",x,y)
 							
 								
 					if temperature	<0:
@@ -150,7 +158,7 @@ func  gen_world():
 						if not Engine.is_editor_hint():
 							if change < 0.1 and change >0.06:
 								gen_obj(grass_layer,obj[0],"small_spruce_tree",x,y)
-							if change < 0.15 and change >0.09:
+							elif change < 0.15 and change >0.09:
 								gen_obj(grass_layer,obj[0],"spruce_tree",x,y)
 								
 								

@@ -1,3 +1,5 @@
+CollisionShape2D
+Area2D
 Sprite2D
 MeshInstance2D
 AnimationPlayer
@@ -7,8 +9,6 @@ ColorRect
 Node2D
 TextureProgressBar
 ProgressBar
-Area2D
-CollisionShape2D
 Timer
 MapCamera2D
 TileMapLayer

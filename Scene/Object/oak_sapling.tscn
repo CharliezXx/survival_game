@@ -69,6 +69,7 @@ obj_node = NodePath(".")
 clickable_area = NodePath("Sprite2D/Area2D")
 Interactable_zone = NodePath("InteractableZone")
 anim = NodePath("AnimationPlayer")
+health = 20
 have_drop = true
 item_drop_scene = ExtResource("2_2y6nn")
 health_bar = NodePath("HealthBar")

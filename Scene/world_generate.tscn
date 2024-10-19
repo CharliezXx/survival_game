@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://crdgtsebroxu8"]
+[gd_scene load_steps=14 format=4 uid="uid://crdgtsebroxu8"]
 
 [ext_resource type="Script" path="res://Script/World_gen.gd" id="1_3lbvx"]
 [ext_resource type="TileSet" uid="uid://c0g6xn6m82q7r" path="res://Asset/Terrarin_tile/Terrarin_tile_set.tres" id="1_pdn7l"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://drickahwgq0db" path="res://Scene/Object/small_spruce.tscn" id="5_fjsc6"]
 [ext_resource type="PackedScene" uid="uid://ruse0osrqh83" path="res://Scene/Object/spruce_tree.tscn" id="6_pflqn"]
 [ext_resource type="Shader" path="res://Shaders/water_shader.gdshader" id="7_3vpj6"]
+[ext_resource type="PackedScene" uid="uid://wewyv5bsy2ej" path="res://Scene/Object/grass.tscn" id="7_k7750"]
+[ext_resource type="PackedScene" uid="uid://r1s3mcxerlf4" path="res://Scene/Object/short_grass.tscn" id="8_cypfi"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ilple"]
 seed = 1991257887
@@ -31,8 +33,10 @@ sand_layer = 1
 grass_layer = 2
 obj = Array[Dictionary]([{
 "birch_tree": ExtResource("4_q6sww"),
+"grass_normal": ExtResource("7_k7750"),
 "oak_sapling": ExtResource("3_1trjn"),
 "oak_tree": ExtResource("2_8qmwo"),
+"short_grass": ExtResource("8_cypfi"),
 "small_spruce_tree": ExtResource("5_fjsc6"),
 "spruce_tree": ExtResource("6_pflqn")
 }])

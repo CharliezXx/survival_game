@@ -1,15 +1,29 @@
-[gd_scene load_steps=14 format=3 uid="uid://ruse0osrqh83"]
+[gd_scene load_steps=13 format=3 uid="uid://r1s3mcxerlf4"]
 
-[ext_resource type="Script" path="res://Script/Destructible_obj.gd" id="1_0jufc"]
-[ext_resource type="Material" uid="uid://c5vp45p3rvvyk" path="res://Shaders/tree_shader_mat.tres" id="2_o7flw"]
-[ext_resource type="PackedScene" uid="uid://ccti4qnhn7p5j" path="res://Scene/Item/item_log_spruce.tscn" id="2_yf2yl"]
-[ext_resource type="Texture2D" uid="uid://b8jq4467tqd4s" path="res://Asset/Object/tree4.png" id="3_7yyxa"]
+[ext_resource type="Script" path="res://Script/Destructible_obj.gd" id="1_4ihen"]
+[ext_resource type="Material" uid="uid://c5vp45p3rvvyk" path="res://Shaders/tree_shader_mat.tres" id="2_rdsug"]
+[ext_resource type="Texture2D" uid="uid://ch5g2adrlx33j" path="res://Asset/Terrarin_tile/short_grass.png" id="3_4js2a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ec3gn"]
-size = Vector2(20, 26.25)
+size = Vector2(26, 18.485)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2vrbg"]
 radius = 59.0
+
+[sub_resource type="Animation" id="Animation_8sn0i"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_2sfrw"]
 resource_name = "obj_hit"
@@ -25,21 +39,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(1, 1), Vector2(1.2, 0.8), Vector2(1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_8sn0i"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o337w"]
@@ -62,23 +61,21 @@ point_count = 3
 [sub_resource type="CurveTexture" id="CurveTexture_vtclc"]
 curve = SubResource("Curve_fi1fb")
 
-[node name="Tree_1" type="Node2D" node_paths=PackedStringArray("obj_node", "clickable_area", "Interactable_zone", "anim", "health_bar")]
+[node name="Grass_normal" type="Node2D" node_paths=PackedStringArray("obj_node", "clickable_area", "Interactable_zone", "anim", "health_bar")]
 y_sort_enabled = true
 texture_filter = 1
-script = ExtResource("1_0jufc")
+script = ExtResource("1_4ihen")
 obj_node = NodePath(".")
 clickable_area = NodePath("Area2D")
 Interactable_zone = NodePath("InteractableZone")
 anim = NodePath("AnimationPlayer")
-health = 300
-have_drop = true
-item_drop_scene = ExtResource("2_yf2yl")
+health = 2
 health_bar = NodePath("HealthBar")
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-0.79, -13.64)
+position = Vector2(4.76837e-07, -9.7575)
 shape = SubResource("RectangleShape2D_ec3gn")
 
 [node name="InteractableZone" type="Area2D" parent="."]
@@ -90,9 +87,9 @@ shape = SubResource("CircleShape2D_2vrbg")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
 texture_filter = 1
-material = ExtResource("2_o7flw")
-texture = ExtResource("3_7yyxa")
-offset = Vector2(2.35, -30.225)
+material = ExtResource("2_rdsug")
+texture = ExtResource("3_4js2a")
+offset = Vector2(0, -16)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
