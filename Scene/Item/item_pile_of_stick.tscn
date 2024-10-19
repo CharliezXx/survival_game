@@ -17,7 +17,8 @@ script = ExtResource("2_7p4o6")
 collectable_area = NodePath("Collectable_area")
 
 [node name="Collectable_area" type="Area2D" parent="Sprite2D"]
+position = Vector2(0, -7)
+scale = Vector2(0.680001, 0.68)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Collectable_area"]
-position = Vector2(0, -6)
 shape = SubResource("CircleShape2D_usrbe")

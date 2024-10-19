@@ -13,21 +13,30 @@ var is_pointing:bool
 var player_in_area:bool
 var max_health
 @export var health_bar:TextureProgressBar 
+var damage_timer: Timer = Timer.new()
+var is_mouse_held:bool = false
 func _ready() -> void:
 	
 	max_health = health
 	update_health_bar()
 	if health_bar:
 		health_bar.visible = false
+		
 	# Connect the input event for the clickable area
-	clickable_area.connect("input_event",_on_clickable_area_input_event)
-	clickable_area.connect("mouse_entered",_mouse_entered)
-	clickable_area.connect("mouse_exited",check_pointing)
+	if clickable_area:
+		clickable_area.connect("input_event",_on_clickable_area_input_event)
+		clickable_area.connect("mouse_entered",_mouse_entered)
+		clickable_area.connect("mouse_exited",check_pointing)
 	
 	if Interactable_zone:
 		Interactable_zone.connect("area_entered", player_entered_area)
 		Interactable_zone.connect("area_exited", player_exited_area)
-		
+	
+	if damage_timer:
+		damage_timer.wait_time = 0.2  # Damage interval in seconds
+		damage_timer.connect("timeout", _on_damage_timer_timeout)
+		add_child(damage_timer)
+
 		
 func _process(delta: float) -> void:
 	if health_bar:
@@ -35,7 +44,6 @@ func _process(delta: float) -> void:
 			health_bar.visible = true
 		else:
 			health_bar.visible = false
-
 func player_entered_area(area):
 	if area.name =="Player_area":
 		print("entered")
@@ -49,16 +57,17 @@ func player_exited_area(area):
 func _mouse_entered():
 	is_pointing = true
 func check_pointing():
-	is_pointing	= false
-	
+	is_pointing	= false	
 func _on_clickable_area_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		is_pointing = true
 		if event.pressed and Input.is_action_pressed("left_click") and player_in_area:
-			do_dmg()
-			if anim:
-				anim.play("obj_hit")
-			update_health_bar()
+			is_mouse_held = true
+			damage_timer.start()
+		else:
+			is_mouse_held = false
+			damage_timer.stop()
+			
 func restore_health():
 	if !player_in_area:
 		health = max_health
@@ -87,3 +96,11 @@ func destroy():
 func update_health_bar():
 	if health_bar:
 		health_bar.value= float(health) / max_health * 100 
+
+func _on_damage_timer_timeout():
+	if is_mouse_held and player_in_area and is_pointing:
+		do_dmg()
+		if anim:
+			anim.play("obj_hit")
+		update_health_bar()
+	
