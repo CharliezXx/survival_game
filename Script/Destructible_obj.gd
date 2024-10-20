@@ -1,7 +1,7 @@
 extends Node2D
 
 class_name Destructible_obj
-var main_scene : PackedScene = preload("res://Scene/world_generate.tscn")
+var main_scene : PackedScene = preload("res://Scene/world_generation.tscn")
 @export var obj_node: Node2D
 @export var clickable_area: Area2D
 @export var Interactable_zone:Area2D
@@ -32,13 +32,14 @@ func _ready() -> void:
 		Interactable_zone.connect("area_entered", player_entered_area)
 		Interactable_zone.connect("area_exited", player_exited_area)
 	
-	if damage_timer:
-		damage_timer.wait_time = 0.2  # Damage interval in seconds
+	'''if damage_timer:
+		damage_timer.wait_time = .2 # Damage interval in seconds
 		damage_timer.connect("timeout", _on_damage_timer_timeout)
-		add_child(damage_timer)
+		add_child(damage_timer)'''
 
 		
 func _process(delta: float) -> void:
+
 	if health_bar:
 		if  player_in_area and is_pointing:
 			health_bar.visible = true
@@ -46,27 +47,33 @@ func _process(delta: float) -> void:
 			health_bar.visible = false
 func player_entered_area(area):
 	if area.name =="Player_area":
-		print("entered")
+		#print("entered")
 		player_in_area = true
 func player_exited_area(area):
 	if area.name =="Player_area":
-		print("exited")
+		#print("exited")
 		player_in_area = false
 		
 		restore_health()
 func _mouse_entered():
 	is_pointing = true
+	if is_mouse_held:
+		damage_timer.start()
+	else:
+		damage_timer.stop()
 func check_pointing():
 	is_pointing	= false	
 func _on_clickable_area_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		is_pointing = true
 		if event.pressed and Input.is_action_pressed("left_click") and player_in_area:
-			is_mouse_held = true
-			damage_timer.start()
+			do_dmg() 
+			'''is_mouse_held = true
+			damage_timer.start()'''
 		else:
-			is_mouse_held = false
-			damage_timer.stop()
+			pass
+			'''is_mouse_held = false
+			damage_timer.stop()'''
 			
 func restore_health():
 	if !player_in_area:
@@ -78,7 +85,10 @@ func restore_health():
 func do_dmg() -> void:
 	if health > 0:  # Check if health is greater than zero
 		health -= 1  # Reduce health by 1
-		print(health)
+		if anim:
+			anim.play("obj_hit")
+		update_health_bar()
+		print(obj_node.name, " |Health = ",health)
 	if health <= 0:  
 		destroy()  
 
@@ -97,10 +107,10 @@ func update_health_bar():
 	if health_bar:
 		health_bar.value= float(health) / max_health * 100 
 
-func _on_damage_timer_timeout():
+'''func _on_damage_timer_timeout():
 	if is_mouse_held and player_in_area and is_pointing:
 		do_dmg()
 		if anim:
 			anim.play("obj_hit")
-		update_health_bar()
+		update_health_bar()'''
 	

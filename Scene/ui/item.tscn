@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dlv3m1xclc1fh"]
+
+[ext_resource type="Texture2D" uid="uid://cwu3uorfmx0wl" path="res://Asset/Item/birch_log.png" id="1_delq2"]
+
+[node name="TextureRect" type="TextureRect"]
+texture = ExtResource("1_delq2")

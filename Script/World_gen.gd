@@ -134,18 +134,20 @@ func  gen_world():
 					arr_grass.append(Vector2i(x,y))
 				
 				#Spawn OBJ on grass Base on temperature
-					if  temperature > 0.2:
+					if  temperature > 0.2 and not Engine.is_editor_hint():
 						var change = randf_range(0,1)
-						if not Engine.is_editor_hint():
-							if change >0.1 and change <0.13:
-								gen_obj(grass_layer,obj[0],"grass_normal",x,y)
-							elif change < 0.1 and change >0.06:
-								gen_obj(grass_layer,obj[0],"oak_tree",x,y)
-							elif change <= 0.05:
-								gen_obj(grass_layer,obj[0],"oak_sapling",x,y)
-							elif change <0.15 and change >0.09:
-								gen_obj(grass_layer,obj[0],"birch_tree",x,y)
-					if  temperature >= 0 and temperature<0.2:
+					
+						if change >0.1 and change <0.13:
+							gen_obj(grass_layer,obj[0],"grass_normal",x,y)
+						elif change < 0.1 and change >0.06:
+							gen_obj(grass_layer,obj[0],"oak_tree",x,y)
+						elif change <= 0.05:
+							gen_obj(grass_layer,obj[0],"oak_sapling",x,y)
+						elif change <0.15 and change >0.09:
+							gen_obj(grass_layer,obj[0],"birch_tree",x,y)
+								
+								
+					if  temperature >= 0 and temperature<0.2 and not Engine.is_editor_hint():
 							var change = randf_range(0,1)
 							if change >0.8:
 								gen_obj(grass_layer,obj[0],"grass_normal",x,y)
@@ -153,7 +155,7 @@ func  gen_world():
 								gen_obj(grass_layer,obj[0],"short_grass",x,y)
 							
 								
-					if temperature	<0:
+					if temperature	<0 and not Engine.is_editor_hint():
 						var change = randf_range(0,1)
 						if not Engine.is_editor_hint():
 							if change < 0.1 and change >0.06:
@@ -162,7 +164,7 @@ func  gen_world():
 								gen_obj(grass_layer,obj[0],"spruce_tree",x,y)
 								
 								
-				if 4 > altitude and altitude > -4 :
+				if 4 > altitude and altitude > -4 and not Engine.is_editor_hint():
 					# Set Sea background
 					tile[water_layer].set_cell(Vector2i(x,y),1,Vector2i(9,10))
 					arr_water.append(Vector2i(x,y))

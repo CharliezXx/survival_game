@@ -162,7 +162,6 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player_area"]
 y_sort_enabled = true
 position = Vector2(0, -4.76837e-07)
-scale = Vector2(1, 1)
 shape = SubResource("CircleShape2D_u1fyx")
 
 [node name="Camera2D" type="Camera2D" parent="."]

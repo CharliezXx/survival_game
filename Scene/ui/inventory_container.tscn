@@ -1,0 +1,71 @@
+[gd_scene load_steps=4 format=3 uid="uid://p1nblvvyu8ne"]
+
+[ext_resource type="Texture2D" uid="uid://cj2b2r812qq41" path="res://Asset/ui/Inventory_container.png" id="1_6yt7e"]
+[ext_resource type="Texture2D" uid="uid://do34xf05qu25n" path="res://Asset/ui/Label_container.png" id="2_umxvw"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_iw10t"]
+font_size = 12
+font_color = Color(0.961, 0.74, 1, 1)
+outline_size = 3
+outline_color = Color(0.312, 0, 0.39, 1)
+
+[node name="InventoryContainer" type="NinePatchRect"]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_6yt7e")
+region_rect = Rect2(0, 0, 32, 32)
+patch_margin_left = 9
+patch_margin_top = 9
+patch_margin_right = 9
+patch_margin_bottom = 9
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="Inventory_slot_container" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 7.0
+offset_top = -68.0
+offset_right = -7.0
+offset_bottom = 82.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 5
+
+[node name="LabelContainer" type="NinePatchRect" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -44.5
+offset_right = 44.5
+offset_bottom = 18.0
+grow_horizontal = 2
+texture = ExtResource("2_umxvw")
+region_rect = Rect2(4, 7, 24, 18)
+patch_margin_left = 15
+patch_margin_top = 7
+patch_margin_right = 15
+patch_margin_bottom = 7
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="Label" type="Label" parent="LabelContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Inventory"
+label_settings = SubResource("LabelSettings_iw10t")
+horizontal_alignment = 1
