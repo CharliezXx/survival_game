@@ -8,7 +8,7 @@ uniform float white = 1;
 uniform int restrict_dir : hint_range(-1,1) = 0;
 void fragment() {
 	COLOR = texture(TEXTURE,UV);
-	
+
 }
 void vertex() {
 	float x = sin(TIME*speed)*(VERTEX.y-y_origin)*strength+sin(TIME*speed)*strength*8.0;

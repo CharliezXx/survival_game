@@ -1,4 +1,5 @@
 TileMapLayer
+World_gen
 CenterContainer
 Label
 TextureRect
@@ -11,4 +12,3 @@ Control
 CollisionShape2D
 Area2D
 Sprite2D
-MeshInstance2D

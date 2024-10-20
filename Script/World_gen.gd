@@ -1,6 +1,6 @@
-@tool
+
 extends Node2D
-class_name Word_gen
+class_name World_gen
 ##Generate Button
 @export var generate:bool:
 	set(value):
@@ -43,9 +43,16 @@ var arr_grass =[]
 @export var random_size:bool=true
 @export_range(1,2) var max_random_size:float = 1.2
 @export var random_facing:bool=true
-@export var obj:Array[Dictionary]
-
-
+@onready var obj:Dictionary ={
+	"oak_tree":preload("res://Scene/Object/oak_tree.tscn"),
+	"oak_sapling":preload("res://Scene/Object/oak_sapling.tscn"),
+	"birch_tree":preload("res://Scene/Object/birch_tree.tscn"),
+	"spruce_tree":preload("res://Scene/Object/spruce_tree.tscn"),
+	"small_spruce":preload("res://Scene/Object/small_spruce.tscn"),
+	"grass_normal":preload("res://Scene/Object/grass.tscn"),
+	"grass_short":preload("res://Scene/Object/short_grass.tscn")
+	
+}
 
 #Player
 
@@ -142,34 +149,34 @@ func  gen_world():
 							var change = randf_range(0,1)
 						
 							if change >0.95:
-								gen_obj(grass_layer,obj[0],"grass_normal",x,y)
+								gen_obj(grass_layer,obj,"grass_normal",x,y)
 							elif change >0.9:
-								gen_obj(grass_layer,obj[0],"grass_short",x,y)
+								gen_obj(grass_layer,obj,"grass_short",x,y)
 							elif change >0.8:
-								gen_obj(grass_layer,obj[0],"oak_tree",x,y)
+								gen_obj(grass_layer,obj,"oak_tree",x,y)
 							elif change >0.7:
-								gen_obj(grass_layer,obj[0],"oak_sapling",x,y)
+								gen_obj(grass_layer,obj,"oak_sapling",x,y)
 							elif change >0.6:
-								gen_obj(grass_layer,obj[0],"birch_tree",x,y)
+								gen_obj(grass_layer,obj,"birch_tree",x,y)
 									
 									
 						if  temperature >= 0 and temperature<0.2 and not Engine.is_editor_hint() and obj:
 								var change = randf_range(0,1)
 								if change >0.8:
-									gen_obj(grass_layer,obj[1],"grass_normal",x,y)
+									gen_obj(grass_layer,obj,"grass_normal",x,y)
 								elif change >0.5:
-									gen_obj(grass_layer,obj[1],"grass_short",x,y)
+									gen_obj(grass_layer,obj,"grass_short",x,y)
 								elif change >0.45:
-									gen_obj(grass_layer,obj[1],"birch_tree",x,y)
+									gen_obj(grass_layer,obj,"birch_tree",x,y)
 								
 									
 						if temperature	< 0 and not Engine.is_editor_hint() and obj:
 							var change = randf_range(0,1)
 							if not Engine.is_editor_hint():
 								if change >0.95:
-									gen_obj(grass_layer,obj[2],"small_spruce",x,y)
+									gen_obj(grass_layer,obj,"small_spruce",x,y)
 								elif change > 0.9:
-									gen_obj(grass_layer,obj[2],"spruce_tree",x,y)
+									gen_obj(grass_layer,obj,"spruce_tree",x,y)
 									
 									
 					if 4 > altitude and altitude > -4:
