@@ -12,4 +12,3 @@ CollisionShape2D
 Area2D
 Sprite2D
 MeshInstance2D
-AnimationPlayer
