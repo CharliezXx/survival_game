@@ -19,23 +19,29 @@ var precip_noise_arr:Array =[]
 var arr_water =[]
 var arr_sand =[]
 var arr_grass =[]
+var arr_stone =[]
 #############################################
 ##LAYERS and Altitude Inspector
 @export_group("Layer and Altitude")
 @export_subgroup("water")
-@export var water_layer:int
+@export var water_layer:int = 0
 @export_range(-1,1) var water_alt_max:float = 0
 @export_range(-1,1) var water_alt_min:float = -1
 
 @export_subgroup("sand")
-@export var sand_layer:int
+@export var sand_layer:int = 1
 @export_range(-1,1) var sand_alt_max:float = 1
 @export_range(-1,1) var sand_alt_min:float = -0.4
 
 @export_subgroup("grass")
-@export var grass_layer:int
-@export_range(-1,1) var grass_alt_max:float =  2
+@export var grass_layer:int = 2
+@export_range(-1,1) var grass_alt_max:float =  1
 @export_range(-1,1) var grass_alt_min:float =  -0.3
+
+@export_subgroup("stone")
+@export var stone_layer:int = 3
+@export_range(-1,1) var stone_alt_max:float =  0
+@export_range(-1,1) var stone_alt_min:float =  -0.25
 ############################################
 @export_group("Random Object Generation")
 @export var random_size:bool=true
@@ -79,13 +85,15 @@ func clear():
 				tile[0].erase_cell(Vector2i(x,y))
 				tile[1].erase_cell(Vector2i(x,y))
 				tile[2].erase_cell(Vector2i(x,y))
-				
+				tile[3].erase_cell(Vector2i(x,y))
 				tile[water_layer].set_cell(Vector2i(x,y),-1,Vector2i(-1,-1))
 				tile[sand_layer].set_cell(Vector2i(x,y),-1,Vector2i(-1,-1))
 				tile[grass_layer].set_cell(Vector2i(x,y),-1,Vector2i(-1,-1))
+				tile[stone_layer].set_cell(Vector2i(x,y),-1,Vector2i(-1,-1))
 		tile[grass_layer].set_cells_terrain_connect(arr_grass,2,-1)
 		tile[sand_layer].set_cells_terrain_connect(arr_sand,1,-1)
 		tile[water_layer].set_cells_terrain_connect(arr_water,0,-1)
+		tile[stone_layer].set_cells_terrain_connect(arr_stone,0,-1)
 		arr_water.clear()
 		arr_sand.clear()
 		arr_grass.clear()
@@ -93,10 +101,11 @@ func clear():
 	#set_cells_terrain_connect(arr,terrain_set,terrain)
 func gen_tile():
 	if tile and obj:	
+		tile[stone_layer].set_cells_terrain_connect(arr_stone,3,0)
 		tile[grass_layer].set_cells_terrain_connect(arr_grass,2,0)
 		tile[sand_layer].set_cells_terrain_connect(arr_sand,1,0)
 		tile[water_layer].set_cells_terrain_connect(arr_water,0,0)
-
+		
 
 
 func  gen_world():
@@ -147,53 +156,26 @@ func  gen_world():
 					# alt in Simplex noise ->(~0.65 to -0.65)
 					if sand_alt_max > altitude and altitude > sand_alt_min:
 						arr_sand.append(Vector2i(x,y))
-
 					if grass_alt_max > altitude and altitude > grass_alt_min:			
 						arr_grass.append(Vector2i(x,y))
+						var change = randi_range(1,3)
+						match change:
+							1:
+								if temperature >= 0 and temperature <= 20:
+									gen_biome_obj("grass land",precipitation,x,y)
+							2:
+								if temperature >= 5 and temperature <= 22 :
+									gen_biome_obj("boadleaf",precipitation,x,y)
+							3:
+								if temperature >= 0 and temperature <= 10 :
+									gen_biome_obj("taiga",precipitation,x,y)
+					if stone_alt_max > altitude and altitude > stone_alt_min and temperature > 25:
+						arr_stone.append(Vector2i(x,y))
 					
-					#Spawn OBJ on grass Base on temperature
-					
-					
-						#Boadleaf forest Biome	
-						if temperature >= 5 and temperature <= 22 and precipitation < 250 and precipitation > 140:
-							var change = randf_range(0,1)
-							if change >0.95:
-								gen_obj(grass_layer,obj,"grass_normal",x,y)
-							elif change >0.9:
-								gen_obj(grass_layer,obj,"grass_short",x,y)
-							elif change >0.8:
-								gen_obj(grass_layer,obj,"oak_tree",x,y)
-							elif change >0.7:
-								gen_obj(grass_layer,obj,"oak_sapling",x,y)
-							elif change >0.6:
-								gen_obj(grass_layer,obj,"birch_tree",x,y)
-									
-						#Grass land Biome			
-						elif temperature >= 0 and temperature <= 20 and precipitation < 140 and precipitation >= 100:
-								var change = randf_range(0,1)
-								if change >0.8:
-									gen_obj(grass_layer,obj,"grass_normal",x,y)
-								elif change >0.5:
-									gen_obj(grass_layer,obj,"grass_short",x,y)
-								elif change >0.45:
-									gen_obj(grass_layer,obj,"birch_tree",x,y)
-								
-						#Taiga Biome	
-						elif temperature >= 0 and temperature <= 10 and precipitation < 100:
-							var change = randf_range(0,1)
-							if not Engine.is_editor_hint():
-								if change >0.9:
-									gen_obj(grass_layer,obj,"small_spruce",x,y)
-								elif change > 0.8:
-									gen_obj(grass_layer,obj,"spruce_tree",x,y)
-									
-									
 					if altitude:
 						# Set Sea background
 						tile[water_layer].set_cell(Vector2i(x,y),1,Vector2i(9,10))
-						arr_water.append(Vector2i(x,y))
-						
-						
+						arr_water.append(Vector2i(x,y))	
 					if not Engine.is_editor_hint() :
 						##SPAWN PLAYER	
 						if altitude > grass_alt_min and x>world_size/2 and y> world_size/2:
@@ -206,6 +188,44 @@ func  gen_world():
 	print("max alt = ",alt_noise_arr.max()," | min alt = ",alt_noise_arr.min())
 	print("max temp = ",tmp_noise_arr.max()," | min temp = ",tmp_noise_arr.min())
 	print("max precip = ",precip_noise_arr.max()," | min precip = ",precip_noise_arr.min())
+func gen_biome_obj(biome:String,precipitation,x,y):
+	biome = biome.to_lower()
+	#Spawn OBJ on grass Base on temperature
+	if biome == "grass land":
+		#Grass land Biome			
+		if precipitation < 140 and precipitation >= 100:
+			var change = randf_range(0,1)
+			if change >0.8:
+				gen_obj(grass_layer,obj,"grass_normal",x,y)
+			elif change >0.5:
+				gen_obj(grass_layer,obj,"grass_short",x,y)
+			elif change >0.45:
+				gen_obj(grass_layer,obj,"birch_tree",x,y)
+				
+	if biome == "taiga":
+		#Taiga Biome	
+		if precipitation < 100:
+			var change = randf_range(0,1)
+			if change >0.9:
+				gen_obj(grass_layer,obj,"small_spruce",x,y)
+			elif change > 0.8:
+				gen_obj(grass_layer,obj,"spruce_tree",x,y)
+		
+	if biome == "boadleaf":
+		#Boadleaf forest Biome	
+		if precipitation < 250 and precipitation > 140:
+			var change = randf_range(0,1)
+			if change >0.95:
+				gen_obj(grass_layer,obj,"grass_normal",x,y)
+			elif change >0.9:
+				gen_obj(grass_layer,obj,"grass_short",x,y)
+			elif change >0.8:
+				gen_obj(grass_layer,obj,"oak_tree",x,y)
+			elif change >0.7:
+				gen_obj(grass_layer,obj,"oak_sapling",x,y)
+			elif change >0.6:
+				gen_obj(grass_layer,obj,"birch_tree",x,y)
+	pass
 	
 # This Function use for generate node scene 
 func gen_obj(layer:int,obj:Dictionary,key:String,x_from_loop:int,y_from_loop:int):

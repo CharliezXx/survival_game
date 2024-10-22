@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://c1njseyllw58r"]
+[gd_scene load_steps=6 format=3 uid="uid://c1njseyllw58r"]
 
 [ext_resource type="Script" path="res://Script/World_gen.gd" id="1_pnvkd"]
 [ext_resource type="TileSet" uid="uid://c0g6xn6m82q7r" path="res://Asset/Terrarin_tile/Terrarin_tile_set.tres" id="2_rm0f4"]
-[ext_resource type="Script" path="res://addon/MapCamera2D.gd" id="3_pjwx4"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0rd3a"]
 frequency = 0.0075
@@ -21,9 +20,7 @@ world_size = 170.0
 altitude_noise = SubResource("FastNoiseLite_0rd3a")
 temperature_noise = SubResource("FastNoiseLite_0mns1")
 precipitation_noise = SubResource("FastNoiseLite_ee8cr")
-tile = [NodePath("water"), NodePath("sand"), NodePath("grass")]
-sand_layer = 1
-grass_layer = 2
+tile = [NodePath("water"), NodePath("sand"), NodePath("grass"), NodePath("stone")]
 
 [node name="water" type="TileMapLayer" parent="."]
 tile_set = ExtResource("2_rm0f4")
@@ -34,5 +31,5 @@ tile_set = ExtResource("2_rm0f4")
 [node name="grass" type="TileMapLayer" parent="."]
 tile_set = ExtResource("2_rm0f4")
 
-[node name="MapCamera2D" type="Camera2D" parent="."]
-script = ExtResource("3_pjwx4")
+[node name="stone" type="TileMapLayer" parent="."]
+tile_set = ExtResource("2_rm0f4")
