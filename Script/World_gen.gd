@@ -2,11 +2,6 @@
 extends Node2D
 class_name World_gen
 ##Generate Button
-@export var generate:bool:
-	set(value):
-		clear()
-		gen_world()
-		gen_tile()
 
 ##Generation Setting Inspector
 @export_group("Generation Setting")
@@ -14,10 +9,13 @@ class_name World_gen
 @export var use_falloff  : bool=true
 @export var use_temperature  : bool=true
 @export_range(0,3) var Falloff_multiplier : float = 1.7
-@export var noise_for_alt : FastNoiseLite = FastNoiseLite.new()
-@export var noise_for_temperature : FastNoiseLite = FastNoiseLite.new()
+@export var altitude_noise : FastNoiseLite = FastNoiseLite.new()
+@export var temperature_noise : FastNoiseLite = FastNoiseLite.new()
+@export var precipitation_noise : FastNoiseLite = FastNoiseLite.new()
 @export var tile : Array[TileMapLayer]
-var noise_arr =[]
+var alt_noise_arr:Array =[]
+var tmp_noise_arr:Array =[]
+var precip_noise_arr:Array =[]
 var arr_water =[]
 var arr_sand =[]
 var arr_grass =[]
@@ -62,7 +60,7 @@ var count:int=0
 
 func _ready() -> void:	
 	if tile and obj:
-		noise_for_temperature.frequency = 0.0255
+		
 		clear()
 		while !isplayer_spawn:
 			gen_world()
@@ -73,7 +71,9 @@ func _ready() -> void:
 #Clear tile from PREVIOUS generation
 func clear():
 	if tile and obj:
-		noise_arr.clear()
+		alt_noise_arr.clear()
+		tmp_noise_arr.clear()
+		precip_noise_arr.clear()
 		for x in 1000:
 			for y in 1000:
 				tile[0].erase_cell(Vector2i(x,y))
@@ -101,15 +101,20 @@ func gen_tile():
 
 func  gen_world():
 	if tile and obj:
-		if noise_for_alt == null:
+		precipitation_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
+		if altitude_noise == null:
 			print("must assign altitude noise")
-		elif noise_for_temperature == null:
+		elif temperature_noise == null:
 			print("must assign temperature noise")
+		elif precipitation_noise == null:
+			print("must assign precipitation noise")
 		else:
-			noise_for_alt.seed = randi()
-			noise_for_temperature.seed =randi()
-			noise_for_temperature.frequency = 0.02
+			altitude_noise.seed = randi()
+			temperature_noise.seed =randi()
+			precipitation_noise.seed =randi()
 			
+			temperature_noise.frequency = 0.0195
+			precipitation_noise.frequency = 0.0195
 		#Loop Through Size of the map
 			for x in world_size:
 				for y in world_size:
@@ -124,18 +129,20 @@ func  gen_world():
 					# Set ALT + falloff
 					var altitude
 					var temperature
+					var precipitation
 					
 					if use_falloff:
-						altitude = noise_for_alt.get_noise_2d(x,y)-(distance*Falloff_multiplier)
+						altitude = ((altitude_noise.get_noise_2d(x,y))-(distance*Falloff_multiplier))
 					else:
-						altitude = noise_for_alt.get_noise_2d(x,y)
+						altitude = (altitude_noise.get_noise_2d(x,y))
 					
-					temperature = noise_for_alt.get_noise_2d(x,y)
-				
+					temperature = ((temperature_noise.get_noise_2d(x,y) *100)/2.6)+10
+					precipitation = ((precipitation_noise.get_noise_2d(x,y) *1000)+600)/4
 						
 					# add noise to arr for check max and min
-					noise_arr.append(noise_for_alt.get_noise_2d(x,y))
-					
+					alt_noise_arr.append(altitude)
+					tmp_noise_arr.append(temperature)
+					precip_noise_arr.append(precipitation)
 					# Check which terrain to place according to althitude
 					# alt in Simplex noise ->(~0.65 to -0.65)
 					if sand_alt_max > altitude and altitude > sand_alt_min:
@@ -145,9 +152,11 @@ func  gen_world():
 						arr_grass.append(Vector2i(x,y))
 					
 					#Spawn OBJ on grass Base on temperature
-						if  temperature > 0.2 and not Engine.is_editor_hint() and obj:
+					
+					
+						#Boadleaf forest Biome	
+						if temperature >= 5 and temperature <= 22 and precipitation < 250 and precipitation > 140:
 							var change = randf_range(0,1)
-						
 							if change >0.95:
 								gen_obj(grass_layer,obj,"grass_normal",x,y)
 							elif change >0.9:
@@ -159,8 +168,8 @@ func  gen_world():
 							elif change >0.6:
 								gen_obj(grass_layer,obj,"birch_tree",x,y)
 									
-									
-						if  temperature >= 0 and temperature<0.2 and not Engine.is_editor_hint() and obj:
+						#Grass land Biome			
+						elif temperature >= 0 and temperature <= 20 and precipitation < 140 and precipitation >= 100:
 								var change = randf_range(0,1)
 								if change >0.8:
 									gen_obj(grass_layer,obj,"grass_normal",x,y)
@@ -169,17 +178,17 @@ func  gen_world():
 								elif change >0.45:
 									gen_obj(grass_layer,obj,"birch_tree",x,y)
 								
-									
-						if temperature	< 0 and not Engine.is_editor_hint() and obj:
+						#Taiga Biome	
+						elif temperature >= 0 and temperature <= 10 and precipitation < 100:
 							var change = randf_range(0,1)
 							if not Engine.is_editor_hint():
-								if change >0.95:
+								if change >0.9:
 									gen_obj(grass_layer,obj,"small_spruce",x,y)
-								elif change > 0.9:
+								elif change > 0.8:
 									gen_obj(grass_layer,obj,"spruce_tree",x,y)
 									
 									
-					if 4 > altitude and altitude > -4:
+					if altitude:
 						# Set Sea background
 						tile[water_layer].set_cell(Vector2i(x,y),1,Vector2i(9,10))
 						arr_water.append(Vector2i(x,y))
@@ -194,9 +203,10 @@ func  gen_world():
 								player.position = player_spawn_pos
 								isplayer_spawn = true
 						###############	
-
-
-
+	print("max alt = ",alt_noise_arr.max()," | min alt = ",alt_noise_arr.min())
+	print("max temp = ",tmp_noise_arr.max()," | min temp = ",tmp_noise_arr.min())
+	print("max precip = ",precip_noise_arr.max()," | min precip = ",precip_noise_arr.min())
+	
 # This Function use for generate node scene 
 func gen_obj(layer:int,obj:Dictionary,key:String,x_from_loop:int,y_from_loop:int):
 	if tile and obj:
