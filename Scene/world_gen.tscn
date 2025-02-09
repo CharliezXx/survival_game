@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://c1njseyllw58r"]
+[gd_scene load_steps=6 format=3 uid="uid://c1njseyllw58r"]
 
 [ext_resource type="Script" path="res://Script/World_gen.gd" id="1_pnvkd"]
 [ext_resource type="TileSet" uid="uid://c0g6xn6m82q7r" path="res://Asset/Terrarin_tile/Terrarin_tile_set.tres" id="2_rm0f4"]
-[ext_resource type="Script" path="res://addon/MapCamera2D.gd" id="3_5cqlq"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0rd3a"]
 frequency = 0.0075
@@ -34,6 +33,3 @@ tile_set = ExtResource("2_rm0f4")
 
 [node name="stone" type="TileMapLayer" parent="."]
 tile_set = ExtResource("2_rm0f4")
-
-[node name="MapCamera2D" type="Camera2D" parent="."]
-script = ExtResource("3_5cqlq")

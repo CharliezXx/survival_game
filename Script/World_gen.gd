@@ -65,15 +65,33 @@ var player = preload("res://Scene/player.tscn").instantiate()
 var count:int=0
 
 func _ready() -> void:	
-	if tile and obj:
+	if not tile or not obj:
+		print("No tile or object data provided!")
+		return
 		
-		clear()
-		while !isplayer_spawn:
-			gen_world()
-			gen_tile()
-		pass
-	else:
-		print("no tile to place")
+	clear()
+	while not isplayer_spawn:
+		gen_world()
+		gen_tile()
+	pass
+
+func clear():
+	if not tile:
+		return
+	alt_noise_arr.clear()
+	tmp_noise_arr.clear()
+	precip_noise_arr.clear()
+	
+	for x in world_size:
+		for y in world_size:
+			for layer in tile:
+				layer.erase_cell(Vector2i(x,y))
+	arr_grass.clear()
+	arr_sand.clear()
+	arr_stone.clear()
+	arr_water.clear()
+	
+''' OLD CODE UNUSED
 #Clear tile from PREVIOUS generation
 func clear():
 	if tile and obj:
@@ -97,7 +115,7 @@ func clear():
 		arr_water.clear()
 		arr_sand.clear()
 		arr_grass.clear()
-
+'''
 	#set_cells_terrain_connect(arr,terrain_set,terrain)
 func gen_tile():
 	if tile and obj:	
