@@ -118,94 +118,87 @@ func clear():
 '''
 	#set_cells_terrain_connect(arr,terrain_set,terrain)
 func gen_tile():
-	if tile and obj:	
-		tile[stone_layer].set_cells_terrain_connect(arr_stone,3,0)
-		tile[grass_layer].set_cells_terrain_connect(arr_grass,2,0)
-		tile[sand_layer].set_cells_terrain_connect(arr_sand,1,0)
-		tile[water_layer].set_cells_terrain_connect(arr_water,0,0)
+	if not tile and not obj:	
+		return
+		
+	tile[stone_layer].set_cells_terrain_connect(arr_stone,3,0)
+	tile[grass_layer].set_cells_terrain_connect(arr_grass,2,0)
+	tile[sand_layer].set_cells_terrain_connect(arr_sand,1,0)
+	tile[water_layer].set_cells_terrain_connect(arr_water,0,0)
 		
 
 
 func  gen_world():
-	if tile and obj:
-		precipitation_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
-		if altitude_noise == null:
-			print("must assign altitude noise")
-		elif temperature_noise == null:
-			print("must assign temperature noise")
-		elif precipitation_noise == null:
-			print("must assign precipitation noise")
-		else:
-			altitude_noise.seed = randi()
-			temperature_noise.seed =randi()
-			precipitation_noise.seed =randi()
-			
-			temperature_noise.frequency = 0.0195
-			precipitation_noise.frequency = 0.0195
+	if not tile and not obj:
+		return
+	if not altitude_noise or not temperature_noise or not precipitation_noise:
+		print("missing noise setting")
+		return
+	
+	precipitation_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
+	altitude_noise.seed = randi()
+	temperature_noise.seed =randi()
+	precipitation_noise.seed =randi()
+	
+	temperature_noise.frequency = 0.0195
+	precipitation_noise.frequency = 0.0195
+		
 		#Loop Through Size of the map
-			for x in world_size:
-				for y in world_size:
-					var player_spawn_pos = tile[grass_layer].map_to_local(Vector2i(x,y))	
-					#making falloff
-					var half_h:float = ((2*(x/world_size))-1)
-					var half_w:float = ((2*(y/world_size))-1)
-					#print(half_h,",",half_w)
-					var distance = 1 - (1-pow(half_w,2)) * (1-pow(half_h,2))
-					#var falloff =[((2*(x/world_Width))-1),((2*(y/world_Height))-1)]
+	for x in world_size:
+		for y in world_size:
+			var player_spawn_pos = tile[grass_layer].map_to_local(Vector2i(x,y))
+				
+			# Precompute falloff
+			var half_h:float = ((2*(x/world_size))-1)
+			var half_w:float = ((2*(y/world_size))-1)
+			var distance = 1 - (1-pow(half_w,2)) * (1-pow(half_h,2))
+			#var falloff =[((2*(x/world_Width))-1),((2*(y/world_Height))-1)]
 
-					# Set ALT + falloff
-					var altitude
-					var temperature
-					var precipitation
-					
-					if use_falloff:
-						altitude = ((altitude_noise.get_noise_2d(x,y))-(distance*Falloff_multiplier))
-					else:
-						altitude = (altitude_noise.get_noise_2d(x,y))
-					
-					temperature = ((temperature_noise.get_noise_2d(x,y) *100)/2.6)+10
-					precipitation = ((precipitation_noise.get_noise_2d(x,y) *1000)+600)/4
-						
-					# add noise to arr for check max and min
-					alt_noise_arr.append(altitude)
-					tmp_noise_arr.append(temperature)
-					precip_noise_arr.append(precipitation)
-					# Check which terrain to place according to althitude
-					# alt in Simplex noise ->(~0.65 to -0.65)
-					if sand_alt_max > altitude and altitude > sand_alt_min:
-						arr_sand.append(Vector2i(x,y))
-					if grass_alt_max > altitude and altitude > grass_alt_min:			
-						arr_grass.append(Vector2i(x,y))
-						var change = randi_range(1,3)
-						match change:
-							1:
-								if temperature >= 0 and temperature <= 20:
-									gen_biome_obj("grass land",precipitation,x,y)
-							2:
-								if temperature >= 5 and temperature <= 22 :
-									gen_biome_obj("boadleaf",precipitation,x,y)
-							3:
-								if temperature >= 0 and temperature <= 10 :
-									gen_biome_obj("taiga",precipitation,x,y)
-					if stone_alt_max > altitude and altitude > stone_alt_min and temperature > 25:
-						arr_stone.append(Vector2i(x,y))
-					
-					if altitude:
-						# Set Sea background
-						tile[water_layer].set_cell(Vector2i(x,y),1,Vector2i(9,10))
-						arr_water.append(Vector2i(x,y))	
-					if not Engine.is_editor_hint() :
-						##SPAWN PLAYER	
-						if altitude > grass_alt_min and x>world_size/2 and y> world_size/2:
-							
-							if !isplayer_spawn:
-								add_child(player)
-								player.position = player_spawn_pos
-								isplayer_spawn = true
-						###############	
+			# Set ALT + falloff
+			var altitude =(altitude_noise.get_noise_2d(x,y))-(distance*Falloff_multiplier if use_falloff else 0)
+			var temperature = ((temperature_noise.get_noise_2d(x,y) *100)/2.6)+10
+			var precipitation = ((precipitation_noise.get_noise_2d(x,y) *1000)+600)/4
+			
+			'Store Data'
+			# add noise to arr for check max and min 
+			alt_noise_arr.append(altitude)
+			tmp_noise_arr.append(temperature)
+			precip_noise_arr.append(precipitation)
+			# Check which terrain to place according to althitude
+			
+			# alt in Simplex noise ->(~0.65 to -0.65)
+			if sand_alt_min < altitude and altitude < sand_alt_max:
+				arr_sand.append(Vector2i(x,y))
+			if grass_alt_min < altitude and altitude < grass_alt_max:	
+				gen_biome_obj(determine_biome(temperature),precipitation,x,y)		
+				arr_grass.append(Vector2i(x,y))
+			if stone_alt_min < altitude and altitude < stone_alt_max and temperature > 25:
+				arr_stone.append(Vector2i(x,y))
+			
+			tile[water_layer].set_cell(Vector2i(x,y),1,Vector2i(9,10))
+			arr_water.append(Vector2i(x,y))	
+			
+			if not Engine.is_editor_hint() :
+				##SPAWN PLAYER	
+				if not isplayer_spawn and altitude > grass_alt_min and x>world_size/2 and y> world_size/2:
+					add_child(player)
+					player.position = player_spawn_pos
+					isplayer_spawn = true						
+				###############	
 	print("max alt = ",alt_noise_arr.max()," | min alt = ",alt_noise_arr.min())
 	print("max temp = ",tmp_noise_arr.max()," | min temp = ",tmp_noise_arr.min())
 	print("max precip = ",precip_noise_arr.max()," | min precip = ",precip_noise_arr.min())
+	
+	
+func determine_biome(temperature:float) -> String:
+	if temperature >= 0 and temperature <= 20:
+		return "grass land"
+	elif temperature >= 5 and temperature <= 22:
+		return "boadleaf"
+	elif temperature >= 0 and temperature <= 10:
+		return "taiga"
+	return "unknow"
+	
 func gen_biome_obj(biome:String,precipitation,x,y):
 	biome = biome.to_lower()
 	#Spawn OBJ on grass Base on temperature
